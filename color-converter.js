@@ -24,12 +24,12 @@ var colorConverter = {
     }
     if (hexColor.match(regex2)) {
       var matches = regex2.exec(hexColor);
-      return [ parseInt(matches[1], 16), parseInt(matches[2], 16), parseInt(matches[3], 16), 1 ];
+      return [ parseInt(matches[1], 16), parseInt(matches[2], 16), parseInt(matches[3], 16) ];
     }
   },
   hexToRgba: function (hexColor) {
-    var rgb = this.hexToRgb(hexColor);
-    return [ rgb[0], rgb[1], rgb[2], 1 ];
+    var rgba = this.hexToRgb(hexColor);
+    return [ rgba[0], rgba[1], rgba[2], 1 ];
   },
   rgbToHex: function (rgbColor) {
     var r = Number(rgbColor[0]).toString(16);
@@ -39,6 +39,30 @@ var colorConverter = {
   },
   rgbaToHex: function (rgbaColor) {
     return this.rgbToHex(rgbaColor);
+  },
+  stringToRgb: function (rgb) {
+    var match;
+    rgb = rgb.replace(/ /g, "");
+    if ((match = rgb.match(/^rgb\(([0-9]+),([0-9]+),([0-9]+)\)$/i)) != null) {
+      return [ match[1], match[2], match[3] ];
+    } else if ((match = rgb.match(/^\[?([0-9]+),([0-9]+),([0-9]+)\]?$/)) != null) {
+      return [ match[1], match[2], match[3] ];
+    }
+  },
+  stringToRgba: function (rgb) {
+    var match;
+    rgb = rgb.replace(/ /g, "");
+    if ((match = rgb.match(/^rgb\(([0-9]+),([0-9]+),([0-9]+),([0-9]+)\)$/i)) != null) {
+      return [ match[1], match[2], match[3], match[4] ];
+    } else if ((match = rgb.match(/^\[?([0-9]+),([0-9]+),([0-9]+),([0-9]+)\]?$/)) != null) {
+      return [ match[1], match[2], match[3], match[4] ];
+    }
+  },
+  rgbToString: function (rgb){
+    return 'rgb(' + rgb[0] +',' + rgb[1] + ',' + rgb[2]+')';
+  },
+  rgbaToString: function (rgb){
+    return 'rgba(' + rgb[0] +',' + rgb[1] + ',' + rgb[2]+',' + rgb[3]+')';
   }
 };
 

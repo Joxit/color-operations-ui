@@ -18,25 +18,23 @@ var hexElt = $('#hex');
 var rgbElt = $('#rgb');
 var hslElt = $('#hsl');
 
-var parseRgb = function (rgb) {
-  var match;
-  if ((match = rgb.match(/^ *[rR][gG][bB] *\( *([0-9]+) *, *([0-9]+) *, *([0-9]+) *\)$/)) != null) {
-    console.log(match)
-    return [ match[1], match[2], match[3] ];
-  } else {
-  }
+
+var backgroundChange = function (color){
+  $('body').css('background-color', color);
 }
 
 var hexChange = function () {
   var hexVal = hexElt.val();
-  var rgbVal = colorConverter.hexToRgba(hexVal);
+  var rgbVal = colorConverter.hexToRgb(hexVal);
   rgbElt.val('rgb(' + rgbVal[0] + ', ' + rgbVal[1] + ', ' + rgbVal[2] + ')');
+  backgroundChange(colorConverter.rgbToString(rgbVal));
 }
 
 var rgbChange = function () {
-  var rgbVal = rgbElt.val();
-  var hexVal = '#' + colorConverter.rgbToHex(parseRgb(rgbVal));
+  var rgbVal = colorConverter.stringToRgb(rgbElt.val());
+  var hexVal = '#' + colorConverter.rgbToHex(rgbVal);
   hexElt.val(hexVal);
+  backgroundChange(colorConverter.rgbToString(rgbVal));
 }
 
 hexElt.change(function (event) {
