@@ -16,11 +16,12 @@
  */
 var colorConverter = {
   hexToRgb: function (hexColor) {
-    var regex1 = /^#*([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/;
-    var regex2 = /^#*([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/;
+    var regex1 = /^0x([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/i;
+    var regex2 = /^0x([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/i;
     var matches;
     if ((matches = hexColor.match(regex1)) != null) {
-      return [ parseInt(matches[1] + matches[1], 16), parseInt(matches[2] + matches[2], 16), parseInt(matches[3] + matches[3], 16), 1 ];
+      return [ parseInt(matches[1] + matches[1], 16), parseInt(matches[2] + matches[2], 16),
+          parseInt(matches[3] + matches[3], 16), 1 ];
     } else if ((matches = hexColor.match(regex2)) != null) {
       return [ parseInt(matches[1], 16), parseInt(matches[2], 16), parseInt(matches[3], 16) ];
     }
@@ -56,11 +57,20 @@ var colorConverter = {
       return [ match[1], match[2], match[3], match[4] ];
     }
   },
-  rgbToString: function (rgb){
-    return 'rgb(' + rgb[0] +',' + rgb[1] + ',' + rgb[2]+')';
+  rgbToString: function (rgb) {
+    return 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
   },
-  rgbaToString: function (rgb){
-    return 'rgba(' + rgb[0] +',' + rgb[1] + ',' + rgb[2]+',' + rgb[3]+')';
+  rgbaToString: function (rgb) {
+    return 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + rgb[3] + ')';
+  },
+  stringToHex: function (hex) {
+    hex = hex.replace(/^#*/, '0x');
+    if (hex <= 0xFFFFFF) {
+      return hex;
+    }
+  },
+  hexToString: function (hex) {
+    return hex.replace(/^0x/i, '#');
   }
 };
 

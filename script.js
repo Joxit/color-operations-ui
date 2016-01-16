@@ -23,8 +23,7 @@ var backgroundChange = function (color){
   $('body').css('background-color', color);
 }
 
-var hexChange = function () {
-  var hexVal = hexElt.val();
+var hexChange = function (hexVal) {
   var rgbVal = colorConverter.hexToRgb(hexVal);
   if(!rgbVal) {
     return;
@@ -33,8 +32,7 @@ var hexChange = function () {
   backgroundChange(colorConverter.rgbToString(rgbVal));
 }
 
-var rgbChange = function () {
-  var rgbVal = colorConverter.stringToRgb(rgbElt.val());
+var rgbChange = function (rgbVal) {
   var hexVal = '#' + colorConverter.rgbToHex(rgbVal);
   if (!rgbVal){
     return;
@@ -44,13 +42,25 @@ var rgbChange = function () {
 }
 
 hexElt.change(function (event) {
-  hexChange();
+  var hexVal = colorConverter.stringToHex(hexElt.val());
+  if (hexVal){
+    hexChange(hexVal);
+  }
 }).keyup(function (event) {
-  hexChange();
+  var hexVal = colorConverter.stringToHex(hexElt.val());
+  if (hexVal){
+    hexChange(hexVal);
+  }
 });
 
 rgbElt.change(function (event) {
-  rgbChange();
+  var rgbVal = colorConverter.stringToRgb(rgbElt.val());
+  if(rgbVal){
+    rgbChange(rgbVal);
+  }
 }).keyup(function (event) {
-  rgbChange();
+  var rgbVal = colorConverter.stringToRgb(rgbElt.val());
+  if(rgbVal){
+    rgbChange(rgbVal);
+  }
 });
