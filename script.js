@@ -26,6 +26,9 @@ var backgroundChange = function (color){
 var hexChange = function () {
   var hexVal = hexElt.val();
   var rgbVal = colorConverter.hexToRgb(hexVal);
+  if(!rgbVal) {
+    return;
+  }
   rgbElt.val('rgb(' + rgbVal[0] + ', ' + rgbVal[1] + ', ' + rgbVal[2] + ')');
   backgroundChange(colorConverter.rgbToString(rgbVal));
 }
@@ -33,6 +36,9 @@ var hexChange = function () {
 var rgbChange = function () {
   var rgbVal = colorConverter.stringToRgb(rgbElt.val());
   var hexVal = '#' + colorConverter.rgbToHex(rgbVal);
+  if (!rgbVal){
+    return;
+  }
   hexElt.val(hexVal);
   backgroundChange(colorConverter.rgbToString(rgbVal));
 }

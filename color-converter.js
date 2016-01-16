@@ -18,12 +18,10 @@ var colorConverter = {
   hexToRgb: function (hexColor) {
     var regex1 = /^#*([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/;
     var regex2 = /^#*([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/;
-    if (hexColor.match(regex1)) {
-      var matches = regex1.exec(hexColor);
+    var matches;
+    if ((matches = hexColor.match(regex1)) != null) {
       return [ parseInt(matches[1] + matches[1], 16), parseInt(matches[2] + matches[2], 16), parseInt(matches[3] + matches[3], 16), 1 ];
-    }
-    if (hexColor.match(regex2)) {
-      var matches = regex2.exec(hexColor);
+    } else if ((matches = hexColor.match(regex2)) != null) {
       return [ parseInt(matches[1], 16), parseInt(matches[2], 16), parseInt(matches[3], 16) ];
     }
   },
