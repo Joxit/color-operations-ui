@@ -24,42 +24,42 @@ var backgroundChange = function (color){
 }
 
 var hexChange = function (hexVal) {
-  var rgbVal = colorConverter.hexToRgb(hexVal);
+  var rgbVal = colorConverter.hex.rgb(hexVal);
   if(!rgbVal) {
     return;
   }
   rgbElt.val('rgb(' + rgbVal[0] + ', ' + rgbVal[1] + ', ' + rgbVal[2] + ')');
-  backgroundChange(colorConverter.rgbToString(rgbVal));
+  backgroundChange(colorConverter.rgb.toString(rgbVal));
 }
 
 var rgbChange = function (rgbVal) {
-  var hexVal = '#' + colorConverter.rgbToHex(rgbVal);
+  var hexVal = '#' + colorConverter.rgb.hex(rgbVal);
   if (!rgbVal){
     return;
   }
   hexElt.val(hexVal);
-  backgroundChange(colorConverter.rgbToString(rgbVal));
+  backgroundChange(colorConverter.rgb.toString(rgbVal));
 }
 
 hexElt.change(function (event) {
-  var hexVal = colorConverter.stringToHex(hexElt.val());
+  var hexVal = colorConverter.hex.fromString(hexElt.val());
   if (hexVal){
     hexChange(hexVal);
   }
 }).keyup(function (event) {
-  var hexVal = colorConverter.stringToHex(hexElt.val());
+  var hexVal = colorConverter.hex.fromString(hexElt.val());
   if (hexVal){
     hexChange(hexVal);
   }
 });
 
 rgbElt.change(function (event) {
-  var rgbVal = colorConverter.stringToRgb(rgbElt.val());
+  var rgbVal = colorConverter.rgb.fromString(rgbElt.val());
   if(rgbVal){
     rgbChange(rgbVal);
   }
 }).keyup(function (event) {
-  var rgbVal = colorConverter.stringToRgb(rgbElt.val());
+  var rgbVal = colorConverter.rgb.fromString(rgbElt.val());
   if(rgbVal){
     rgbChange(rgbVal);
   }
