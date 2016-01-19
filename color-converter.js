@@ -20,14 +20,13 @@ var hex = {
     var regex2 = /^0x([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/i;
     var matches;
     if ((matches = hexColor.match(regex1)) != null) {
-      return [ parseInt(matches[1] + matches[1], 16), parseInt(matches[2] + matches[2], 16),
-          parseInt(matches[3] + matches[3], 16), 1 ];
+      return [ parseInt(matches[1] + matches[1], 16), parseInt(matches[2] + matches[2], 16), parseInt(matches[3] + matches[3], 16), 1 ];
     } else if ((matches = hexColor.match(regex2)) != null) {
       return [ parseInt(matches[1], 16), parseInt(matches[2], 16), parseInt(matches[3], 16) ];
     }
   },
   rgba: function (hexColor) {
-    var rgba = this.hexToRgb(hexColor);
+    var rgba = this.rgb(hexColor);
     return [ rgba[0], rgba[1], rgba[2], 1 ];
   },
   fromString: function (hex) {
@@ -47,7 +46,34 @@ var rgb = {
     var b = Number(rgbColor[2]).toString(16);
     return (r.length === 1 ? "0" : "") + r + (g.length === 1 ? "0" : "") + g + (b.length === 1 ? "0" : "") + b;
   },
-
+  hsl: function (rgb) {
+    var R = rgb[0] / 255, G = rgb[1] / 255, B = rgb[2] / 255;
+    var M = Math.max(R, G, B);
+    var m = Math.min(R, G, B);
+    var C = M - m;
+    var H = 0;
+    switch (M) {
+      case m: {
+        H = 0;
+        break;
+      }
+      case R: {
+        H = ((G - B) / C) + (G < B ? 6 : 0);
+        break;
+      }
+      case G: {
+        H = ((B - R) / C) + 2;
+        break;
+      }
+      case B: {
+        H = ((R - G) / C) + 4;
+        break;
+      }
+    }
+    var L = (1 / 2) * (M + m);
+    var S = C == 0 ? 0 : C / (1 - Math.abs(2 * L - 1));
+    return [ 60 * H, S, L ];
+  },
   fromString: function (rgb) {
     var match;
     rgb = rgb.replace(/ /g, "");
@@ -68,7 +94,7 @@ var rgba = {
   fromString: function (rgba) {
     var match;
     rgba = rgba.replace(/ /g, "");
-    if ((match = rgb.match(/^rgb\(([0-9]+),([0-9]+),([0-9]+),([0-9]+)\)$/i)) != null) {
+    if ((match = rgb.match(/^rgba\(([0-9]+),([0-9]+),([0-9]+),([0-9]+)\)$/i)) != null) {
       return [ match[1], match[2], match[3], match[4] ];
     } else if ((match = rgb.match(/^\[?([0-9]+),([0-9]+),([0-9]+),([0-9]+)\]?$/)) != null) {
       return [ match[1], match[2], match[3], match[4] ];
@@ -77,7 +103,11 @@ var rgba = {
   toString: function (rgb) {
     return 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + rgb[3] + ')';
   }
-}
+};
+var hsl = {
+  rgb: function (hsl) {
+  }
+};
 var colorConverter = {
   hex: hex,
   rgb: rgb,
