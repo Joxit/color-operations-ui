@@ -24,12 +24,8 @@ var backgroundChange = function (color){
 }
 
 var hexChange = function (hexVal) {
-  var rgbVal = colorConverter.hex.rgb(hexVal);
-  if(!rgbVal) {
-    return;
-  }
-  rgbElt.val('rgb(' + rgbVal[0] + ', ' + rgbVal[1] + ', ' + rgbVal[2] + ')');
-  hslElt.val(colorConverter.rgb.hsl(rgbVal));
+  rgbElt.val(colorConverter.rgb.toString(colorConverter.hex.rgb(hexVal)));
+  hslElt.val(colorConverter.hsl.toString(colorConverter.hex.hsl(hexVal)));
   backgroundChange(colorConverter.rgb.toString(rgbVal));
 }
 
@@ -39,7 +35,7 @@ var rgbChange = function (rgbVal) {
     return;
   }
   hexElt.val(hexVal);
-  hslElt.val(colorConverter.rgb.hsl(rgbVal));
+  hslElt.val(colorConverter.hsl.toString(colorConverter.rgb.hsl(rgbVal)));
   backgroundChange(colorConverter.rgb.toString(rgbVal));
 }
 var hslChange = function (hslVal) {

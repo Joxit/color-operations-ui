@@ -20,7 +20,8 @@ var hex = {
     var regex2 = /^0x([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/i;
     var matches;
     if ((matches = hexColor.match(regex1)) != null) {
-      return [ parseInt(matches[1] + matches[1], 16), parseInt(matches[2] + matches[2], 16), parseInt(matches[3] + matches[3], 16), 1 ];
+      return [ parseInt(matches[1] + matches[1], 16), parseInt(matches[2] + matches[2], 16),
+          parseInt(matches[3] + matches[3], 16), 1 ];
     } else if ((matches = hexColor.match(regex2)) != null) {
       return [ parseInt(matches[1], 16), parseInt(matches[2], 16), parseInt(matches[3], 16) ];
     }
@@ -140,14 +141,13 @@ var hsl = {
   fromString: function (hsl) {
     var match;
     hsl = hsl.replace(/ /g, "");
-    if ((match = hsl.match(/^hsl\(([0-9.]+),([0-9.]+),([0-9.]+)\)$/i)) != null) {
-      return [ match[1], match[2], match[3] ];
-    } else if ((match = hsl.match(/^\[?([0-9.]+),([0-9.]+),([0-9.]+)\]?$/)) != null) {
-      return [ match[1], match[2], match[3] ];
+    if (((match = hsl.match(/^hsl\(([0-9.]+),([0-9.]+)(%?),([0-9.]+)(%?)\)$/i)) != null)
+        || ((match = hsl.match(/^\[?([0-9.]+),([0-9.]+)(%?),([0-9.]+)(%?)\]?$/)) != null)) {
+      return [ match[1], match[3] == '%' ? match[2] / 100 : match[2], match[5] == '%' ? match[4] / 100 : match[4] ];
     }
   },
   toString: function (hsl) {
-    return 'hsl(' + hsl[0] + ',' + hsl[1] + ',' + hsl[2] + ')';
+    return 'hsl(' + (hsl[0] * 1).toFixed(2) + ', ' + (hsl[1] * 100).toFixed(2) + '%, ' + (hsl[2] * 100).toFixed(2) + '%)';
   }
 
 };
