@@ -29,6 +29,10 @@ var hex = {
     var rgba = this.rgb(hexColor);
     return [ rgba[0], rgba[1], rgba[2], 1 ];
   },
+  hsl: function (hexColor) {
+    var rgb = this.rgb(hexColor);
+    return colorConverter.rgb.hsl(rgb);
+  },
   fromString: function (hex) {
     hex = hex.replace(/^#*/, '0x');
     if (hex <= 0xFFFFFF) {
@@ -105,13 +109,53 @@ var rgba = {
   }
 };
 var hsl = {
+  hex: function (hsl) {
+    console.log(hsl);
+    console.log(colorConverter.hsl.rgb(hsl));
+    return colorConverter.rgb.hex(colorConverter.hsl.rgb(hsl));
+  },
   rgb: function (hsl) {
+    var H = hsl[0], S = hsl[1], L = hsl[2];
+    var C = (1 - Math.abs(2 * L - 1)) * S;
+    var X = C * (1 - Math.abs((H / 60) % 2 - 1));
+    var m = L - C / 2;
+    var rgb;
+    if (H < 60) {
+      rgb = [ C + m, X + m, m ];
+    } else if (H < 120) {
+      rgb = [ X + m, C + m, m ];
+    } else if (H < 180) {
+      rgb = [ m, C + m, X + m ];
+    } else if (H < 240) {
+      rgb = [ m, X + m, C + m ];
+    } else if (H < 300) {
+      rgb = [ X + m, m, C + m ];
+    } else if (H < 360) {
+      rgb = [ C + m, m, X + m ];
+    }
+    if (rgb) {
+      return [ Math.round(rgb[0] * 255), Math.round(rgb[1] * 255), Math.round(rgb[2] * 255) ];
+    }
+  },
+  fromString: function (hsl) {
+    var match;
+    hsl = hsl.replace(/ /g, "");
+    if ((match = hsl.match(/^hsl\(([0-9.]+),([0-9.]+),([0-9.]+)\)$/i)) != null) {
+      return [ match[1], match[2], match[3] ];
+    } else if ((match = hsl.match(/^\[?([0-9.]+),([0-9.]+),([0-9.]+)\]?$/)) != null) {
+      return [ match[1], match[2], match[3] ];
+    }
+  },
+  toString: function (hsl) {
+    return 'hsl(' + hsl[0] + ',' + hsl[1] + ',' + hsl[2] + ')';
   }
+
 };
 var colorConverter = {
   hex: hex,
   rgb: rgb,
-  rgba: rgba
+  rgba: rgba,
+  hsl: hsl
 };
 
 module.exports = colorConverter;
