@@ -41,7 +41,7 @@ var hex = {
     }
   },
   toString: function (hex) {
-    return hex.replace(/^0x/i, '#');
+    return hex.replace(/^(0x)?/i, '#');
   }
 };
 var rgb = {
@@ -82,10 +82,11 @@ var rgb = {
   fromString: function (rgb) {
     var match;
     rgb = rgb.replace(/ /g, "");
-    if ((match = rgb.match(/^rgb\(([0-9]+),([0-9]+),([0-9]+)\)$/i)) != null) {
-      return [ match[1], match[2], match[3] ];
-    } else if ((match = rgb.match(/^\[?([0-9]+),([0-9]+),([0-9]+)\]?$/)) != null) {
-      return [ match[1], match[2], match[3] ];
+    if (((match = rgb.match(/^rgb\(([0-9]+),([0-9]+),([0-9]+)\)$/i)) != null)
+        || ((match = rgb.match(/^\[?([0-9]+),([0-9]+),([0-9]+)\]?$/)) != null)) {
+      if (match[1] <= 255 && match[2] <= 255 && match[3] <= 255) {
+        return [ match[1], match[2], match[3] ];
+      }
     }
   },
   toString: function (rgb) {
@@ -143,11 +144,14 @@ var hsl = {
     hsl = hsl.replace(/ /g, "");
     if (((match = hsl.match(/^hsl\(([0-9.]+),([0-9.]+)(%?),([0-9.]+)(%?)\)$/i)) != null)
         || ((match = hsl.match(/^\[?([0-9.]+),([0-9.]+)(%?),([0-9.]+)(%?)\]?$/)) != null)) {
-      return [ match[1], match[3] == '%' ? match[2] / 100 : match[2], match[5] == '%' ? match[4] / 100 : match[4] ];
+      if (match[1] <= 360 && match[2] <= 100 && match[4] <= 100) {
+        return [ match[1], match[3] == '%' ? match[2] / 100 : match[2], match[5] == '%' ? match[4] / 100 : match[4] ];
+      }
     }
   },
   toString: function (hsl) {
-    return 'hsl(' + (hsl[0] * 1).toFixed(2) + ', ' + (hsl[1] * 100).toFixed(2) + '%, ' + (hsl[2] * 100).toFixed(2) + '%)';
+    return 'hsl(' + (hsl[0] * 1).toFixed(2) + ', ' + (hsl[1] * 100).toFixed(2) + '%, ' + (hsl[2] * 100).toFixed(2)
+        + '%)';
   }
 
 };

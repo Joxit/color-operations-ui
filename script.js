@@ -26,24 +26,17 @@ var backgroundChange = function (color){
 var hexChange = function (hexVal) {
   rgbElt.val(colorConverter.rgb.toString(colorConverter.hex.rgb(hexVal)));
   hslElt.val(colorConverter.hsl.toString(colorConverter.hex.hsl(hexVal)));
-  backgroundChange(colorConverter.rgb.toString(rgbVal));
+  backgroundChange(colorConverter.hex.toString(hexVal));
 }
 
 var rgbChange = function (rgbVal) {
-  var hexVal = '#' + colorConverter.rgb.hex(rgbVal);
-  if (!rgbVal){
-    return;
-  }
-  hexElt.val(hexVal);
+  hexElt.val(colorConverter.hex.toString(colorConverter.rgb.hex(rgbVal)));
   hslElt.val(colorConverter.hsl.toString(colorConverter.rgb.hsl(rgbVal)));
   backgroundChange(colorConverter.rgb.toString(rgbVal));
 }
 var hslChange = function (hslVal) {
-  if (!hslVal){
-    return;
-  }
-  hexElt.val(colorConverter.hsl.hex(hslVal));
-  rgbElt.val(colorConverter.hsl.rgb(hslVal));
+  hexElt.val(colorConverter.hex.toString(colorConverter.hsl.hex(hslVal)));
+  rgbElt.val(colorConverter.rgb.toString(colorConverter.hsl.rgb(hslVal)));
   backgroundChange(colorConverter.hsl.toString(hslVal));
 }
 hexElt.change(function (event) {
@@ -73,13 +66,11 @@ rgbElt.change(function (event) {
 
 hslElt.change(function (event) {
   var hslVal = colorConverter.hsl.fromString(hslElt.val());
-  console.log(hslVal)
   if(hslVal){
     hslChange(hslVal);
   }
 }).keyup(function (event) {
   var hslVal = colorConverter.hsl.fromString(hslElt.val());
-  console.log(hslVal)
   if(hslVal){
     hslChange(hslVal);
   }
