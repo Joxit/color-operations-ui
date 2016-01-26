@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "color-ops": "mapbox/color-ops"
+    "color-ops": "mapbox/color-ops",
+    "jquery": "jquery/jquery"
   }
 }

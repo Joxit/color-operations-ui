@@ -36,7 +36,7 @@ var hex = {
   },
   fromString: function (hex) {
     hex = hex.replace(/^#*/, '0x');
-    if (hex <= 0xFFFFFF) {
+    if (hex <= 0xFFFFFF && (hex.length == 5 || hex.length == 8)) {
       return hex;
     }
   },

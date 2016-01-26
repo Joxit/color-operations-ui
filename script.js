@@ -23,6 +23,15 @@ var backgroundChange = function (color){
   $('body').css('background-color', color);
 }
 
+var validElt = function (elt) {
+  elt.removeClass('error').addClass('valid');
+}
+
+
+var errorElt = function (elt) {
+  elt.removeClass('valid').addClass('error');
+}
+
 var hexChange = function (hexVal) {
   rgbElt.val(colorConverter.rgb.toString(colorConverter.hex.rgb(hexVal)));
   hslElt.val(colorConverter.hsl.toString(colorConverter.hex.hsl(hexVal)));
@@ -42,24 +51,36 @@ var hslChange = function (hslVal) {
 hexElt.change(function (event) {
   var hexVal = colorConverter.hex.fromString(hexElt.val());
   if (hexVal){
+    validElt(hexElt);
     hexChange(hexVal);
+  }else {
+    errorElt(hexElt);
   }
 }).keyup(function (event) {
   var hexVal = colorConverter.hex.fromString(hexElt.val());
   if (hexVal){
+    validElt(hexElt);
     hexChange(hexVal);
+  }else {
+    errorElt(hexElt);
   }
 });
 
 rgbElt.change(function (event) {
   var rgbVal = colorConverter.rgb.fromString(rgbElt.val());
   if(rgbVal){
+    validElt(rgbElt);
     rgbChange(rgbVal);
+  }else {
+    errorElt(rgbElt);
   }
 }).keyup(function (event) {
   var rgbVal = colorConverter.rgb.fromString(rgbElt.val());
   if(rgbVal){
+    validElt(rgbElt);
     rgbChange(rgbVal);
+  }else {
+    errorElt(rgbElt);
   }
 });
 
@@ -67,11 +88,17 @@ rgbElt.change(function (event) {
 hslElt.change(function (event) {
   var hslVal = colorConverter.hsl.fromString(hslElt.val());
   if(hslVal){
+    validElt(hslElt);
     hslChange(hslVal);
+  }else {
+    errorElt(hslElt);
   }
 }).keyup(function (event) {
   var hslVal = colorConverter.hsl.fromString(hslElt.val());
   if(hslVal){
+    validElt(hslElt);
     hslChange(hslVal);
+  } else {
+    errorElt(hslElt);
   }
 });
