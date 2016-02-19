@@ -18,12 +18,11 @@ var hex = {
   rgb: function (hexColor) {
     var regex1 = /^0x([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/i;
     var regex2 = /^0x([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/i;
-    var matches;
-    if ((matches = hexColor.match(regex1)) != null) {
-      return [ parseInt(matches[1] + matches[1], 16), parseInt(matches[2] + matches[2], 16),
-          parseInt(matches[3] + matches[3], 16), 1 ];
-    } else if ((matches = hexColor.match(regex2)) != null) {
-      return [ parseInt(matches[1], 16), parseInt(matches[2], 16), parseInt(matches[3], 16) ];
+    if (hexColor.match(regex1) != null) {
+      return [ (hexColor >> 8) + (hexColor >> 8) * 16, ((hexColor & 0x0F0) >> 4) + ((hexColor & 0x0F0) >> 4) * 16,
+          (hexColor & 0x00F >> 8) + (hexColor & 0x00F >> 8) * 16 ];
+    } else if (hexColor.match(regex2) != null) {
+      return [ hexColor >> 16, (hexColor & 0x00FF00) >> 8, hexColor & 0x0000FF ];
     }
   },
   rgba: function (hexColor) {
