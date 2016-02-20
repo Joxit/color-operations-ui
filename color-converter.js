@@ -87,6 +87,7 @@ var rgb = {
         return [ match[1], match[2], match[3] ];
       }
     }
+    return null;
   },
   toString: function (rgb) {
     return 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
@@ -98,10 +99,10 @@ var rgba = {
   },
   fromString: function (rgba) {
     var match;
+    console.log(rgba)
     rgba = rgba.replace(/ /g, "");
-    if ((match = rgb.match(/^rgba\(([0-9]+),([0-9]+),([0-9]+),([0-9]+)\)$/i)) != null) {
-      return [ match[1], match[2], match[3], match[4] ];
-    } else if ((match = rgb.match(/^\[?([0-9]+),([0-9]+),([0-9]+),([0-9]+)\]?$/)) != null) {
+    if ((match = rgba.match(/^rgba\(([0-9]+),([0-9]+),([0-9]+),([0-9.]+)\)$/i)) != null 
+        || (match = rgba.match(/^\[?([0-9]+),([0-9]+),([0-9]+),([0-9.]+)\]?$/)) != null) {
       return [ match[1], match[2], match[3], match[4] ];
     }
   },

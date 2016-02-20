@@ -41,7 +41,11 @@ var hexChange = function (hexVal) {
 var rgbChange = function (rgbVal) {
   hexElt.val(colorConverter.hex.toString(colorConverter.rgb.hex(rgbVal)));
   hslElt.val(colorConverter.hsl.toString(colorConverter.rgb.hsl(rgbVal)));
-  backgroundChange(colorConverter.rgb.toString(rgbVal));
+  if (rgbVal.length == 4) {
+    backgroundChange(colorConverter.rgba.toString(rgbVal));
+  } else {
+    backgroundChange(colorConverter.rgb.toString(rgbVal));
+  }
 }
 var hslChange = function (hslVal) {
   hexElt.val(colorConverter.hex.toString(colorConverter.hsl.hex(hslVal)));
@@ -67,7 +71,7 @@ hexElt.change(function (event) {
 });
 
 rgbElt.change(function (event) {
-  var rgbVal = colorConverter.rgb.fromString(rgbElt.val());
+  var rgbVal = colorConverter.rgb.fromString(rgbElt.val()) || colorConverter.rgba.fromString(rgbElt.val());
   if(rgbVal){
     validElt(rgbElt);
     rgbChange(rgbVal);
@@ -75,7 +79,7 @@ rgbElt.change(function (event) {
     errorElt(rgbElt);
   }
 }).keyup(function (event) {
-  var rgbVal = colorConverter.rgb.fromString(rgbElt.val());
+  var rgbVal = colorConverter.rgb.fromString(rgbElt.val()) || colorConverter.rgba.fromString(rgbElt.val());
   if(rgbVal){
     validElt(rgbElt);
     rgbChange(rgbVal);
