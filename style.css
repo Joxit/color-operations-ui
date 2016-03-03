@@ -1,10 +1,30 @@
-
-.conversion {
-  width: 600px;
+html, body {
+  width: 100%;
+  height: 100%;
   margin: auto;
 }
+.wrap {
+  width: 100%;
+  height: 100%;
+  margin: auto;
+  display: flex;
+}
 
-input {
+.conversion, .function {
+  width: 50%;
+  height: 100%;
+}
+
+.conversion {
+  border-right: 1px solid rgba(200,200,200,1);
+}
+
+.function {
+  border-left: 1px solid rgba(200,200,200,1);
+}
+
+
+input, select {
   font-size: 24px;
   padding: 20px;
   -webkit-border-radius: 5px;
@@ -13,7 +33,7 @@ input {
   border: 4px solid rgba(200,200,200,1);
   display: block;
   margin: 50px auto;
-  width: 100%;
+  width: 90%;
 }
 
 input.error:focus {

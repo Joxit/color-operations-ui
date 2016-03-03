@@ -1,22 +1,35 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
-<LINK href="style.css" rel="stylesheet" type="text/css">
-<title>Color Operations</title>
+    <meta charset="UTF-8">
+    <LINK href="style.css" rel="stylesheet" type="text/css">
+    <title>Color Operations</title>
 </head>
 <body>
- <div>
-  <div class="conversion">
-   <input type="text" placeholder="hex" id="hex">
-   <input type="text" placeholder="rgb" id="rgb">
-   <input type="text" placeholder="hsl" id="hsl">
-  </div>
-  <div class="operations"></div>
- </div>
- <script src="node_modules/color-ops/index.js"></script>
- <script src="color-converter.js"></script>
+<div class="wrap">
+<div class="conversion">
+  <input type="text" placeholder="hex" id="hex">
+  <input type="text" placeholder="rgb" id="rgb">
+  <input type="text" placeholder="hsl" id="hsl">
+</div>
+<div class="function">
+  <input type="text" placeholder="percent" id="percent">
+  <select name="function_selected" id="function_selected">
+    <option value="saturate">saturate</option>
+    <option value="desaturate">desaturate</option>
+    <option value="lighten">lighten</option>
+    <option value="darken">darken</option>
+    <option value="fadein">fadein</option>
+    <option value="fadeout">fadeout</option>
+    <option value="spin">spin</option>
+  </select>
+  <input type="text" placeholder="fonction result" id="fonction_res" disabled>
+</div>
+</div>
+<script src="node_modules/color-ops/index.js"></script>
+<script src="color-converter.js"></script>
  <script src="jquery-2.1.4.min.js"></script>
- <script src="script.js"></script>
+<script src="conversion-script.js"></script>
+<script src="function-script.js"></script>
 </body>
 </html>

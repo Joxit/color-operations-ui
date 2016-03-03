@@ -19,8 +19,8 @@ var rgbElt = $('#rgb');
 var hslElt = $('#hsl');
 
 
-var backgroundChange = function (color){
-  $('body').css('background-color', color);
+var cBackgroundChange = function (color){
+  $('.conversion').css('background-color', color);
 }
 
 var validElt = function (elt) {
@@ -35,23 +35,24 @@ var errorElt = function (elt) {
 var hexChange = function (hexVal) {
   rgbElt.val(colorConverter.rgb.toString(colorConverter.hex.rgb(hexVal)));
   hslElt.val(colorConverter.hsl.toString(colorConverter.hex.hsl(hexVal)));
-  backgroundChange(colorConverter.hex.toString(hexVal));
+  cBackgroundChange(colorConverter.hex.toString(hexVal));
 }
 
 var rgbChange = function (rgbVal) {
   hexElt.val(colorConverter.hex.toString(colorConverter.rgb.hex(rgbVal)));
   hslElt.val(colorConverter.hsl.toString(colorConverter.rgb.hsl(rgbVal)));
   if (rgbVal.length == 4) {
-    backgroundChange(colorConverter.rgba.toString(rgbVal));
+    cBackgroundChange(colorConverter.rgba.toString(rgbVal));
   } else {
-    backgroundChange(colorConverter.rgb.toString(rgbVal));
+    cBackgroundChange(colorConverter.rgb.toString(rgbVal));
   }
 }
 var hslChange = function (hslVal) {
   hexElt.val(colorConverter.hex.toString(colorConverter.hsl.hex(hslVal)));
   rgbElt.val(colorConverter.rgb.toString(colorConverter.hsl.rgb(hslVal)));
-  backgroundChange(colorConverter.hsl.toString(hslVal));
+  cBackgroundChange(colorConverter.hsl.toString(hslVal));
 }
+
 hexElt.change(function (event) {
   var hexVal = colorConverter.hex.fromString(hexElt.val());
   if (hexVal){
