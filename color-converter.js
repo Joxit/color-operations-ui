@@ -107,7 +107,7 @@ var rgba = {
     }
   },
   toString: function (rgb) {
-    return 'rgba(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ',' + rgb[3] + ')';
+    return 'rgba(' + Math.round(rgb[0]) + ',' + Math.round(rgb[1]) + ',' + Math.round(rgb[2]) + ',' + rgb[3] + ')';
   }
 };
 var hsl = {

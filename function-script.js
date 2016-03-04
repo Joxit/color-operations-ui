@@ -20,6 +20,7 @@ var resElt = $('#fonction_res');
 
 
 var fBackgroundChange = function (color){
+console.log(color)
   $('.function').css('background-color', color);
 }
 
@@ -32,9 +33,41 @@ var errorElt = function (elt) {
 }
 
 var percentChange = function (percentVal) {
-  var color = colorConverter.rgb.fromString(rgbElt.val()).push(1.0);
-  
-  colorFunctions.lighten(color, 0.5)
+  var color = colorConverter.rgb.fromString(rgbElt.val()) || colorConverter.rgba.fromString(rgbElt.val());
+  if (!color) {
+    return;
+  } else if (color.length == 3) {
+    color.push(1.0);
+  }
+  var resColor = null;
+  switch (selectElt.val()) {
+    case "saturate":
+      resColor = colorFunctions.saturate(color, percentVal)
+      break;
+    case "desaturate":
+      resColor = colorFunctions.saturate(color, -percentVal)
+      break;
+    case "lighten":
+      resColor = colorFunctions.lighten(color, percentVal)
+      break;
+    case "darken":
+      resColor = colorFunctions.lighten(color, -percentVal)
+      break;
+    case "fadein":
+      resColor = colorFunctions.fade(color, percentVal)
+      break;
+    case "fadeout":
+      resColor = colorFunctions.fade(color, -percentVal)
+      break;
+    case "spin":
+      resColor = colorFunctions.spin(color, percentVal)
+      break;
+  }
+  if(resColor) {
+    var colorString = colorConverter.rgba.toString(resColor);
+    resElt.val(colorString);
+    fBackgroundChange(colorString);
+  }
 }
 
 selectElt.change(function (event) {
