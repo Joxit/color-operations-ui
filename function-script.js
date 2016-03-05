@@ -70,9 +70,13 @@ var percentChange = function (percentVal) {
   }
 }
 
-selectElt.change(function (event) {
+var onFunctionUpdate = function (event){
   var percentVal = percentElt.val();
   if(percentVal && percentVal.length > 0) {
     percentChange(percentElt.val());
   }
-});
+}
+
+percentElt.on('change keyup click', onFunctionUpdate).ready(onFunctionUpdate);
+
+selectElt.on('change keyup click', onFunctionUpdate);
