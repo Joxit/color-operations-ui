@@ -41,6 +41,7 @@ var onHexChange = function (event) {
   rgbElt.val(colorConverter.rgb.toString(colorConverter.hex.rgb(hexVal)));
   hslElt.val(colorConverter.hsl.toString(colorConverter.hex.hsl(hexVal)));
   cBackgroundChange(colorConverter.hex.toString(hexVal));
+  onFunctionUpdate(event);
 }
 
 var onRgbChange = function (event) {
@@ -58,6 +59,7 @@ var onRgbChange = function (event) {
   } else {
     cBackgroundChange(colorConverter.rgb.toString(rgbVal));
   }
+  onFunctionUpdate(event);
 }
 
 var onHslChange = function (event) {
@@ -71,6 +73,7 @@ var onHslChange = function (event) {
   hexElt.val(colorConverter.hex.toString(colorConverter.hsl.hex(hslVal)));
   rgbElt.val(colorConverter.rgb.toString(colorConverter.hsl.rgb(hslVal)));
   cBackgroundChange(colorConverter.hsl.toString(hslVal));
+  onFunctionUpdate(event);
 }
 
 hexElt.on('change keyup click', onHexChange).ready(onHexChange);

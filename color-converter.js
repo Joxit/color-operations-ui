@@ -20,7 +20,7 @@ var hex = {
     var regex2 = /^0x([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/i;
     if (hexColor.match(regex1) != null) {
       return [ (hexColor >> 8) + (hexColor >> 8) * 16, ((hexColor & 0x0F0) >> 4) + ((hexColor & 0x0F0) >> 4) * 16,
-          (hexColor & 0x00F >> 8) + (hexColor & 0x00F >> 8) * 16 ];
+          (hexColor & 0x00F) + (hexColor & 0x00F) * 16 ];
     } else if (hexColor.match(regex2) != null) {
       return [ hexColor >> 16, (hexColor & 0x00FF00) >> 8, hexColor & 0x0000FF ];
     }
