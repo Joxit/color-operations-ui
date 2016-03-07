@@ -1,6 +1,7 @@
 {
   "dependencies": {
     "color-ops": "mapbox/color-ops",
-    "jquery": "jquery/jquery"
+    "jquery": "jquery/jquery",
+    "material-design-lite": "^1.1.2"
   }
 }
