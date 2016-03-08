@@ -21,17 +21,29 @@
    </div>
   </header>
   <main class="mdl-layout__content">
-  <section class="mdl-layout__tab-panel is-active conversion full-width" id="fixed-tab-1">
-   <div class=" page-content">
-    <div class="">
-     <input type="text" placeholder="hex" id="hex"> <input type="text" placeholder="rgb" id="rgb"> <input
-      type="text" placeholder="hsl" id="hsl">
-    </div>
-   </div>
+  <section class="mdl-layout__tab-panel is-active " id="fixed-tab-1">
+  <div class="wrap conversion full-width">
+   <input type="text" placeholder="hex" id="hex"> <input type="text" placeholder="rgb" id="rgb"> <input type="text" placeholder="hsl" id="hsl">
+  </div>
   </section>
-  <section class="mdl-layout__tab-panel" id="fixed-tab-2">
-   <div class="page-content">
-    <!-- Your content goes here -->
+  <section class="mdl-layout__tab-panel full-width" id="fixed-tab-2">
+  <div class="wrap flex">
+   <div class="half-width border-right conversion">
+    <input type="text" placeholder="color" id="color">
+   </div>
+   <div class="half-width border-left function">
+    <input type="text" placeholder="percent" id="percent">
+    <select name="function_selected" id="function_selected">
+      <option value="saturate">saturate</option>
+      <option value="desaturate">desaturate</option>
+      <option value="lighten">lighten</option>
+      <option value="darken">darken</option>
+      <option value="fadein">fadein</option>
+      <option value="fadeout">fadeout</option>
+      <option value="spin">spin</option>	
+    </select>
+    <input type="text" placeholder="fonction result" id="fonction_res" disabled>
+   </div>
    </div>
   </section>
   <section class="mdl-layout__tab-panel" id="fixed-tab-3">

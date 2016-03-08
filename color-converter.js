@@ -90,7 +90,9 @@ var rgb = {
     return null;
   },
   toString: function (rgb) {
-    return 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
+    if(rgb && rgb.length == 3) {
+      return 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
+    }
   }
 };
 var rgba = {
@@ -107,7 +109,9 @@ var rgba = {
     }
   },
   toString: function (rgb) {
-    return 'rgba(' + Math.round(rgb[0]) + ',' + Math.round(rgb[1]) + ',' + Math.round(rgb[2]) + ',' + rgb[3] + ')';
+    if(rgb && rgb.length >= 4) {
+      return 'rgba(' + Math.round(rgb[0]) + ',' + Math.round(rgb[1]) + ',' + Math.round(rgb[2]) + ',' + rgb[3] + ')';
+    }
   }
 };
 var hsl = {
@@ -150,8 +154,10 @@ var hsl = {
     }
   },
   toString: function (hsl) {
-    return 'hsl(' + (hsl[0] * 1).toFixed(2) + ', ' + (hsl[1] * 100).toFixed(2) + '%, ' + (hsl[2] * 100).toFixed(2)
-        + '%)';
+    if (hsl && hsl.length == 3) {
+      return 'hsl(' + (hsl[0] * 1).toFixed(2) + ', ' + (hsl[1] * 100).toFixed(2) + '%, ' + (hsl[2] * 100).toFixed(2)
+          + '%)';
+    }
   }
 
 };

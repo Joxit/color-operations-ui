@@ -17,9 +17,11 @@
 var hexElt = $('#hex');
 var rgbElt = $('#rgb');
 var hslElt = $('#hsl');
+var colorElt = $('#color');
 
 var cBackgroundChange = function (color) {
   $('.conversion').css('background-color', color);
+  colorElt.val(color);
 }
 
 var validElt = function (elt) {
@@ -76,8 +78,26 @@ var onHslChange = function (event) {
   onFunctionUpdate(event);
 }
 
+var onColorChange = function (event) {
+  var rgbVal = colorConverter.rgb.fromString(colorElt.val()) || colorConverter.rgba.fromString(colorElt.val());
+  var hslVal = colorConverter.hsl.fromString(colorElt.val());
+  var hexVal = colorConverter.hex.fromString(colorElt.val());
+  var color = colorConverter.rgb.toString(rgbVal) || colorConverter.hsl.toString(hslVal) || colorConverter.hex.toString(hexVal);
+  
+  if (!rgbVal && !hslVal && !hexVal) {
+    errorElt(colorElt);
+    return;
+  }
+
+  validElt(colorElt);
+  cBackgroundChange(color);
+  onFunctionUpdate(event);
+}
+
 hexElt.on('change keyup click', onHexChange).ready(onHexChange);
 
 rgbElt.on('change keyup click', onRgbChange).ready(onRgbChange);
 
 hslElt.on('change keyup click', onHslChange).ready(onHslChange);
+
+colorElt.on('change keyup click', onColorChange).ready(onColorChange);
