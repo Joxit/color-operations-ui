@@ -34,23 +34,37 @@ var hex = {
     return colorConverter.rgb.hsl(rgb);
   },
   fromString: function (hex) {
+    if(!hex){
+      console.log('Undefined hex');
+    }
     hex = hex.replace(/^#*/, '0x');
     if (hex <= 0xFFFFFF && (hex.length == 5 || hex.length == 8)) {
       return hex;
     }
   },
   toString: function (hex) {
-    return hex.replace(/^(0x)?/i, '#');
+    if(hex){
+      return hex.replace(/^(0x)?/i, '#');
+    }
+    console.log('Undefined hex');
   }
 };
 var rgb = {
   hex: function (rgbColor) {
+    if (!rgbColor || !Array.isArray(rgbColor) || rgbColor.length != 3) {
+      console.log('Undefined rgb');
+      return;
+    }
     var r = Number(rgbColor[0]).toString(16);
     var g = Number(rgbColor[1]).toString(16);
     var b = Number(rgbColor[2]).toString(16);
     return (r.length === 1 ? "0" : "") + r + (g.length === 1 ? "0" : "") + g + (b.length === 1 ? "0" : "") + b;
   },
   hsl: function (rgb) {
+    if (!rgb || !Array.isArray(rgb) || rgb.length != 3) {
+      console.log('Undefined rgb');
+      return;
+    }
     var R = rgb[0] / 255, G = rgb[1] / 255, B = rgb[2] / 255;
     var M = Math.max(R, G, B);
     var m = Math.min(R, G, B);
@@ -79,6 +93,10 @@ var rgb = {
     return [ 60 * H, S, L ];
   },
   fromString: function (rgb) {
+    if (!rgb || !Array.isArray(rgb) || rgb.length != 3) {
+      console.log('Undefined rgb');
+      return;
+    }
     var match;
     rgb = rgb.replace(/ /g, "");
     if (((match = rgb.match(/^rgb\(([0-9]+),([0-9]+),([0-9]+)\)$/i)) != null)
@@ -87,21 +105,27 @@ var rgb = {
         return [ match[1], match[2], match[3] ];
       }
     }
-    return null;
   },
   toString: function (rgb) {
-    if(rgb && rgb.length == 3) {
+    if(rgb && Array.isArray(rgb) && rgb.length == 3) {
       return 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
     }
+    console.log('Undefined rgb');
   }
 };
 var rgba = {
   hex: function (rgbaColor) {
-    return colorConverter.rgb.hex(rgbaColor);
+    if(rgbaColor && Array.isArray(rgbColor) && rgbColor.length != 4) {
+      return colorConverter.rgb.hex(rgbaColor);
+    }
+    console.log('Undefined rgba');
   },
   fromString: function (rgba) {
+    if(!rgba || !Array.isArray(rgba) || rgba.length != 4) {
+      console.log('Undefined rgba');
+      return;
+    }
     var match;
-    console.log(rgba)
     rgba = rgba.replace(/ /g, "");
     if ((match = rgba.match(/^rgba\(([0-9]+),([0-9]+),([0-9]+),([0-9.]+)\)$/i)) != null 
         || (match = rgba.match(/^\[?([0-9]+),([0-9]+),([0-9]+),([0-9.]+)\]?$/)) != null) {
@@ -109,18 +133,25 @@ var rgba = {
     }
   },
   toString: function (rgb) {
-    if(rgb && rgb.length >= 4) {
+    if(rgb && Array.isArray(rgb) && rgb.length >= 4) {
       return 'rgba(' + Math.round(rgb[0]) + ',' + Math.round(rgb[1]) + ',' + Math.round(rgb[2]) + ',' + rgb[3] + ')';
     }
+    console.log('Undefined rgba');
   }
 };
 var hsl = {
   hex: function (hsl) {
-    console.log(hsl);
-    console.log(colorConverter.hsl.rgb(hsl));
-    return colorConverter.rgb.hex(colorConverter.hsl.rgb(hsl));
+    var rgb;
+    if(hsl && (rgb = colorConverter.hsl.rgb(hsl))) {
+      return colorConverter.rgb.hex(rgb);
+    }
+    console.log('Undefined hsl');
   },
   rgb: function (hsl) {
+    if (!hsl) {
+      console.log('Undefined hsl');
+      return;
+    }
     var H = hsl[0], S = hsl[1], L = hsl[2];
     var C = (1 - Math.abs(2 * L - 1)) * S;
     var X = C * (1 - Math.abs((H / 60) % 2 - 1));
@@ -144,6 +175,10 @@ var hsl = {
     }
   },
   fromString: function (hsl) {
+    if (!hsl) {
+      console.log('Undefined hsl');
+      return;
+    }
     var match;
     hsl = hsl.replace(/ /g, "");
     if (((match = hsl.match(/^hsl\(([0-9.]+),([0-9.]+)(%?),([0-9.]+)(%?)\)$/i)) != null)
@@ -154,10 +189,11 @@ var hsl = {
     }
   },
   toString: function (hsl) {
-    if (hsl && hsl.length == 3) {
+    if (hsl && Array.isArray(hsl) && hsl.length == 3) {
       return 'hsl(' + (hsl[0] * 1).toFixed(2) + ', ' + (hsl[1] * 100).toFixed(2) + '%, ' + (hsl[2] * 100).toFixed(2)
           + '%)';
     }
+    console.log('Undefined hsl');
   }
 
 };

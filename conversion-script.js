@@ -82,13 +82,14 @@ var onColorChange = function (event) {
   var rgbVal = colorConverter.rgb.fromString(colorElt.val()) || colorConverter.rgba.fromString(colorElt.val());
   var hslVal = colorConverter.hsl.fromString(colorElt.val());
   var hexVal = colorConverter.hex.fromString(colorElt.val());
-  var color = colorConverter.rgb.toString(rgbVal) || colorConverter.hsl.toString(hslVal) || colorConverter.hex.toString(hexVal);
-  
+
   if (!rgbVal && !hslVal && !hexVal) {
     errorElt(colorElt);
     return;
   }
 
+  var rgb = colorConverter.rgb.toString(rgbVal) || colorConverter.rgba.toString(rgbVal) || colorConverter.hsl.toString(hslVal) || colorConverter.hex.toString(hexVal);
+  
   validElt(colorElt);
   cBackgroundChange(color);
   onFunctionUpdate(event);
