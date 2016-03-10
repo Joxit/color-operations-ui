@@ -17,11 +17,9 @@
 var hexElt = $('#hex');
 var rgbElt = $('#rgb');
 var hslElt = $('#hsl');
-var colorElt = $('#color');
 
 var cBackgroundChange = function (color) {
   $('.conversion').css('background-color', color);
-  colorElt.val(color);
 }
 
 var validElt = function (elt) {
@@ -38,12 +36,12 @@ var onHexChange = function (event) {
     errorElt(hexElt);
     return;
   }
-  
+
   validElt(hexElt);
   rgbElt.val(colorConverter.rgb.toString(colorConverter.hex.rgb(hexVal)));
   hslElt.val(colorConverter.hsl.toString(colorConverter.hex.hsl(hexVal)));
   cBackgroundChange(colorConverter.hex.toString(hexVal));
-  onFunctionUpdate(event);
+  functionScript.onFunctionUpdate(event);
 }
 
 var onRgbChange = function (event) {
@@ -52,7 +50,7 @@ var onRgbChange = function (event) {
     errorElt(rgbElt);
     return;
   }
-  
+
   validElt(rgbElt);
   hexElt.val(colorConverter.hex.toString(colorConverter.rgb.hex(rgbVal)));
   hslElt.val(colorConverter.hsl.toString(colorConverter.rgb.hsl(rgbVal)));
@@ -61,7 +59,7 @@ var onRgbChange = function (event) {
   } else {
     cBackgroundChange(colorConverter.rgb.toString(rgbVal));
   }
-  onFunctionUpdate(event);
+  functionScript.onFunctionUpdate(event);
 }
 
 var onHslChange = function (event) {
@@ -75,24 +73,7 @@ var onHslChange = function (event) {
   hexElt.val(colorConverter.hex.toString(colorConverter.hsl.hex(hslVal)));
   rgbElt.val(colorConverter.rgb.toString(colorConverter.hsl.rgb(hslVal)));
   cBackgroundChange(colorConverter.hsl.toString(hslVal));
-  onFunctionUpdate(event);
-}
-
-var onColorChange = function (event) {
-  var rgbVal = colorConverter.rgb.fromString(colorElt.val()) || colorConverter.rgba.fromString(colorElt.val());
-  var hslVal = colorConverter.hsl.fromString(colorElt.val());
-  var hexVal = colorConverter.hex.fromString(colorElt.val());
-
-  if (!rgbVal && !hslVal && !hexVal) {
-    errorElt(colorElt);
-    return;
-  }
-
-  var rgb = colorConverter.rgb.toString(rgbVal) || colorConverter.rgba.toString(rgbVal) || colorConverter.hsl.toString(hslVal) || colorConverter.hex.toString(hexVal);
-  
-  validElt(colorElt);
-  cBackgroundChange(color);
-  onFunctionUpdate(event);
+  functionScript.onFunctionUpdate(event);
 }
 
 hexElt.on('change keyup click', onHexChange).ready(onHexChange);
@@ -101,4 +82,3 @@ rgbElt.on('change keyup click', onRgbChange).ready(onRgbChange);
 
 hslElt.on('change keyup click', onHslChange).ready(onHslChange);
 
-colorElt.on('change keyup click', onColorChange).ready(onColorChange);

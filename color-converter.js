@@ -18,10 +18,10 @@ var hex = {
   rgb: function (hexColor) {
     var regex1 = /^0x([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/i;
     var regex2 = /^0x([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/i;
-    if (hexColor.match(regex1) != null) {
+    if (hexColor && hexColor.match(regex1) != null) {
       return [ (hexColor >> 8) + (hexColor >> 8) * 16, ((hexColor & 0x0F0) >> 4) + ((hexColor & 0x0F0) >> 4) * 16,
           (hexColor & 0x00F) + (hexColor & 0x00F) * 16 ];
-    } else if (hexColor.match(regex2) != null) {
+    } else if (hexColor && hexColor.match(regex2) != null) {
       return [ hexColor >> 16, (hexColor & 0x00FF00) >> 8, hexColor & 0x0000FF ];
     }
   },
@@ -34,7 +34,7 @@ var hex = {
     return colorConverter.rgb.hsl(rgb);
   },
   fromString: function (hex) {
-    if(!hex){
+    if (!hex) {
       console.log('Undefined hex');
     }
     hex = hex.replace(/^#*/, '0x');
@@ -43,7 +43,7 @@ var hex = {
     }
   },
   toString: function (hex) {
-    if(hex){
+    if (hex) {
       return hex.replace(/^(0x)?/i, '#');
     }
     console.log('Undefined hex');
@@ -51,7 +51,7 @@ var hex = {
 };
 var rgb = {
   hex: function (rgbColor) {
-    if (!rgbColor || !Array.isArray(rgbColor) || rgbColor.length != 3) {
+    if (!rgbColor) {
       console.log('Undefined rgb');
       return;
     }
@@ -93,7 +93,7 @@ var rgb = {
     return [ 60 * H, S, L ];
   },
   fromString: function (rgb) {
-    if (!rgb || !Array.isArray(rgb) || rgb.length != 3) {
+    if (!rgb) {
       console.log('Undefined rgb');
       return;
     }
@@ -107,33 +107,37 @@ var rgb = {
     }
   },
   toString: function (rgb) {
-    if(rgb && Array.isArray(rgb) && rgb.length == 3) {
+    if (rgb && Array.isArray(rgb) && rgb.length == 3) {
       return 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
     }
     console.log('Undefined rgb');
+  },
+  convertFromString: function (color) {
+    return colorConverter.hex.rgb(colorConverter.hex.fromString(color))
+        || colorConverter.hsl.rgb(colorConverter.hsl.fromString(color)) || colorConverter.rgb.fromString(color);
   }
 };
 var rgba = {
   hex: function (rgbaColor) {
-    if(rgbaColor && Array.isArray(rgbColor) && rgbColor.length != 4) {
+    if (rgbaColor) {
       return colorConverter.rgb.hex(rgbaColor);
     }
     console.log('Undefined rgba');
   },
   fromString: function (rgba) {
-    if(!rgba || !Array.isArray(rgba) || rgba.length != 4) {
+    if (!rgba) {
       console.log('Undefined rgba');
       return;
     }
     var match;
     rgba = rgba.replace(/ /g, "");
-    if ((match = rgba.match(/^rgba\(([0-9]+),([0-9]+),([0-9]+),([0-9.]+)\)$/i)) != null 
+    if ((match = rgba.match(/^rgba\(([0-9]+),([0-9]+),([0-9]+),([0-9.]+)\)$/i)) != null
         || (match = rgba.match(/^\[?([0-9]+),([0-9]+),([0-9]+),([0-9.]+)\]?$/)) != null) {
       return [ match[1], match[2], match[3], match[4] ];
     }
   },
   toString: function (rgb) {
-    if(rgb && Array.isArray(rgb) && rgb.length >= 4) {
+    if (rgb && Array.isArray(rgb) && rgb.length >= 4) {
       return 'rgba(' + Math.round(rgb[0]) + ',' + Math.round(rgb[1]) + ',' + Math.round(rgb[2]) + ',' + rgb[3] + ')';
     }
     console.log('Undefined rgba');
@@ -142,7 +146,7 @@ var rgba = {
 var hsl = {
   hex: function (hsl) {
     var rgb;
-    if(hsl && (rgb = colorConverter.hsl.rgb(hsl))) {
+    if (hsl && (rgb = colorConverter.hsl.rgb(hsl))) {
       return colorConverter.rgb.hex(rgb);
     }
     console.log('Undefined hsl');
@@ -183,8 +187,9 @@ var hsl = {
     hsl = hsl.replace(/ /g, "");
     if (((match = hsl.match(/^hsl\(([0-9.]+),([0-9.]+)(%?),([0-9.]+)(%?)\)$/i)) != null)
         || ((match = hsl.match(/^\[?([0-9.]+),([0-9.]+)(%?),([0-9.]+)(%?)\]?$/)) != null)) {
-      if (match[1] <= 360 && match[2] <= 100 && match[4] <= 100) {
-        return [ match[1], match[3] == '%' ? match[2] / 100 : match[2], match[5] == '%' ? match[4] / 100 : match[4] ];
+      var hsl = [ match[1], match[3] == '%' ? match[2] / 100 : match[2], match[5] == '%' ? match[4] / 100 : match[4] ];
+      if (hsl[0] <= 360 && hsl[1] <= 1 && hsl[2] <= 1) {
+        return hsl;
       }
     }
   },
