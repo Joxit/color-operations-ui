@@ -18,10 +18,10 @@ var hex = {
   rgb: function (hexColor) {
     var regex1 = /^0x([0-9a-fA-F]{1})([0-9a-fA-F]{1})([0-9a-fA-F]{1})$/i;
     var regex2 = /^0x([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})$/i;
-    if (hexColor.match(regex1) != null) {
+    if (hexColor && hexColor.match(regex1) != null) {
       return [ (hexColor >> 8) + (hexColor >> 8) * 16, ((hexColor & 0x0F0) >> 4) + ((hexColor & 0x0F0) >> 4) * 16,
           (hexColor & 0x00F) + (hexColor & 0x00F) * 16 ];
-    } else if (hexColor.match(regex2) != null) {
+    } else if (hexColor && hexColor.match(regex2) != null) {
       return [ hexColor >> 16, (hexColor & 0x00FF00) >> 8, hexColor & 0x0000FF ];
     }
   },
@@ -34,23 +34,37 @@ var hex = {
     return colorConverter.rgb.hsl(rgb);
   },
   fromString: function (hex) {
+    if (!hex) {
+      console.log('Undefined hex');
+    }
     hex = hex.replace(/^#*/, '0x');
     if (hex <= 0xFFFFFF && (hex.length == 5 || hex.length == 8)) {
       return hex;
     }
   },
   toString: function (hex) {
-    return hex.replace(/^(0x)?/i, '#');
+    if (hex) {
+      return hex.replace(/^(0x)?/i, '#');
+    }
+    console.log('Undefined hex');
   }
 };
 var rgb = {
   hex: function (rgbColor) {
+    if (!rgbColor) {
+      console.log('Undefined rgb');
+      return;
+    }
     var r = Number(rgbColor[0]).toString(16);
     var g = Number(rgbColor[1]).toString(16);
     var b = Number(rgbColor[2]).toString(16);
     return (r.length === 1 ? "0" : "") + r + (g.length === 1 ? "0" : "") + g + (b.length === 1 ? "0" : "") + b;
   },
   hsl: function (rgb) {
+    if (!rgb || !Array.isArray(rgb) || rgb.length != 3) {
+      console.log('Undefined rgb');
+      return;
+    }
     var R = rgb[0] / 255, G = rgb[1] / 255, B = rgb[2] / 255;
     var M = Math.max(R, G, B);
     var m = Math.min(R, G, B);
@@ -79,6 +93,10 @@ var rgb = {
     return [ 60 * H, S, L ];
   },
   fromString: function (rgb) {
+    if (!rgb) {
+      console.log('Undefined rgb');
+      return;
+    }
     var match;
     rgb = rgb.replace(/ /g, "");
     if (((match = rgb.match(/^rgb\(([0-9]+),([0-9]+),([0-9]+)\)$/i)) != null)
@@ -87,36 +105,57 @@ var rgb = {
         return [ match[1], match[2], match[3] ];
       }
     }
-    return null;
   },
   toString: function (rgb) {
-    return 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
+    if (rgb && Array.isArray(rgb) && rgb.length == 3) {
+      return 'rgb(' + rgb[0] + ',' + rgb[1] + ',' + rgb[2] + ')';
+    }
+    console.log('Undefined rgb');
+  },
+  convertFromString: function (color) {
+    return colorConverter.hex.rgb(colorConverter.hex.fromString(color))
+        || colorConverter.hsl.rgb(colorConverter.hsl.fromString(color)) || colorConverter.rgb.fromString(color);
   }
 };
 var rgba = {
   hex: function (rgbaColor) {
-    return colorConverter.rgb.hex(rgbaColor);
+    if (rgbaColor) {
+      return colorConverter.rgb.hex(rgbaColor);
+    }
+    console.log('Undefined rgba');
   },
   fromString: function (rgba) {
+    if (!rgba) {
+      console.log('Undefined rgba');
+      return;
+    }
     var match;
-    console.log(rgba)
     rgba = rgba.replace(/ /g, "");
-    if ((match = rgba.match(/^rgba\(([0-9]+),([0-9]+),([0-9]+),([0-9.]+)\)$/i)) != null 
+    if ((match = rgba.match(/^rgba\(([0-9]+),([0-9]+),([0-9]+),([0-9.]+)\)$/i)) != null
         || (match = rgba.match(/^\[?([0-9]+),([0-9]+),([0-9]+),([0-9.]+)\]?$/)) != null) {
       return [ match[1], match[2], match[3], match[4] ];
     }
   },
   toString: function (rgb) {
-    return 'rgba(' + Math.round(rgb[0]) + ',' + Math.round(rgb[1]) + ',' + Math.round(rgb[2]) + ',' + rgb[3] + ')';
+    if (rgb && Array.isArray(rgb) && rgb.length >= 4) {
+      return 'rgba(' + Math.round(rgb[0]) + ',' + Math.round(rgb[1]) + ',' + Math.round(rgb[2]) + ',' + rgb[3] + ')';
+    }
+    console.log('Undefined rgba');
   }
 };
 var hsl = {
   hex: function (hsl) {
-    console.log(hsl);
-    console.log(colorConverter.hsl.rgb(hsl));
-    return colorConverter.rgb.hex(colorConverter.hsl.rgb(hsl));
+    var rgb;
+    if (hsl && (rgb = colorConverter.hsl.rgb(hsl))) {
+      return colorConverter.rgb.hex(rgb);
+    }
+    console.log('Undefined hsl');
   },
   rgb: function (hsl) {
+    if (!hsl) {
+      console.log('Undefined hsl');
+      return;
+    }
     var H = hsl[0], S = hsl[1], L = hsl[2];
     var C = (1 - Math.abs(2 * L - 1)) * S;
     var X = C * (1 - Math.abs((H / 60) % 2 - 1));
@@ -140,18 +179,26 @@ var hsl = {
     }
   },
   fromString: function (hsl) {
+    if (!hsl) {
+      console.log('Undefined hsl');
+      return;
+    }
     var match;
     hsl = hsl.replace(/ /g, "");
     if (((match = hsl.match(/^hsl\(([0-9.]+),([0-9.]+)(%?),([0-9.]+)(%?)\)$/i)) != null)
         || ((match = hsl.match(/^\[?([0-9.]+),([0-9.]+)(%?),([0-9.]+)(%?)\]?$/)) != null)) {
-      if (match[1] <= 360 && match[2] <= 100 && match[4] <= 100) {
-        return [ match[1], match[3] == '%' ? match[2] / 100 : match[2], match[5] == '%' ? match[4] / 100 : match[4] ];
+      var hsl = [ match[1], match[3] == '%' ? match[2] / 100 : match[2], match[5] == '%' ? match[4] / 100 : match[4] ];
+      if (hsl[0] <= 360 && hsl[1] <= 1 && hsl[2] <= 1) {
+        return hsl;
       }
     }
   },
   toString: function (hsl) {
-    return 'hsl(' + (hsl[0] * 1).toFixed(2) + ', ' + (hsl[1] * 100).toFixed(2) + '%, ' + (hsl[2] * 100).toFixed(2)
-        + '%)';
+    if (hsl && Array.isArray(hsl) && hsl.length == 3) {
+      return 'hsl(' + (hsl[0] * 1).toFixed(2) + ', ' + (hsl[1] * 100).toFixed(2) + '%, ' + (hsl[2] * 100).toFixed(2)
+          + '%)';
+    }
+    console.log('Undefined hsl');
   }
 
 };

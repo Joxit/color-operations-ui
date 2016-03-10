@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<LINK href="node_modules/material-design-lite/dist/material.min.css" rel="stylesheet" type="text/css">
+<LINK href="style.css" rel="stylesheet" type="text/css">
+<title>Color Operations</title>
+</head>
+<body>
+ <!-- Simple header with fixed tabs. -->
+ <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header mdl-layout--fixed-tabs">
+  <header class="mdl-layout__header">
+   <div class="mdl-layout__header-row">
+    <!-- Title -->
+    <span class="mdl-layout-title">Color operation ui</span>
+   </div>
+   <!-- Tabs -->
+   <div class="mdl-layout__tab-bar mdl-js-ripple-effect">
+    <a href="#fixed-tab-1" class="mdl-layout__tab is-active">Converter</a> <a href="#fixed-tab-2"
+     class="mdl-layout__tab">Unary functions</a> <a href="#fixed-tab-3" class="mdl-layout__tab">Binary functions</a>
+   </div>
+  </header>
+  <main class="mdl-layout__content">
+  <section class="mdl-layout__tab-panel is-active " id="fixed-tab-1">
+  <div class="wrap conversion full-width">
+   <input type="text" placeholder="hex" id="hex"> <input type="text" placeholder="rgb" id="rgb"> <input type="text" placeholder="hsl" id="hsl">
+  </div>
+  </section>
+  <section class="mdl-layout__tab-panel full-width" id="fixed-tab-2">
+  <div class="wrap flex">
+   <div class="half-width border-right function-color">
+    <input type="text" placeholder="color" id="color">
+   </div>
+   <div class="half-width border-left function">
+    <input type="text" placeholder="percent" id="percent">
+    <select name="function_selected" id="function_selected">
+      <option value="saturate">saturate</option>
+      <option value="desaturate">desaturate</option>
+      <option value="lighten">lighten</option>
+      <option value="darken">darken</option>
+      <option value="fadein">fadein</option>
+      <option value="fadeout">fadeout</option>
+      <option value="spin">spin</option>	
+    </select>
+    <input type="text" placeholder="fonction result" id="fonction_res" disabled>
+   </div>
+   </div>
+  </section>
+  <section class="mdl-layout__tab-panel" id="fixed-tab-3">
+   <div class="page-content">
+    <!-- Your content goes here -->
+   </div>
+  </section>
+  </main>
+ </div>
+ <script src="node_modules/color-ops/index.js"></script>
+ <script src="node_modules/material-design-lite/dist/material.min.js"></script>
+ <script src="color-converter.js"></script>
+ <script src="jquery-2.1.4.min.js"></script>
+ <script src="conversion-script.js"></script>
+ <script src="function-script.js"></script>
+</body>
+</html>

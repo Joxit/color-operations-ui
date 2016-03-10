@@ -14,26 +14,41 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+var functionScript = {};
 var percentElt = $('#percent');
 var selectElt = $('#function_selected');
 var resElt = $('#fonction_res');
+var colorElt = $('#color');
 
-
-var fBackgroundChange = function (color){
-console.log(color)
-  $('.function').css('background-color', color);
-}
-
-var validElt = function (elt) {
+functionScript.validElt = function (elt) {
   elt.removeClass('error').addClass('valid');
 }
 
-var errorElt = function (elt) {
+functionScript.errorElt = function (elt) {
   elt.removeClass('valid').addClass('error');
 }
 
-var percentChange = function (percentVal) {
-  var color = colorConverter.rgb.fromString(rgbElt.val()) || colorConverter.rgba.fromString(rgbElt.val());
+functionScript.onColorChange = function (event) {
+  var rgbVal = colorConverter.rgb.fromString(colorElt.val()) || colorConverter.rgba.fromString(colorElt.val());
+  var hslVal = colorConverter.hsl.fromString(colorElt.val());
+  var hexVal = colorConverter.hex.fromString(colorElt.val());
+
+  if (!rgbVal && !hslVal && !hexVal) {
+    functionScript.errorElt(colorElt);
+    return;
+  }
+
+  var color = colorConverter.rgb.toString(rgbVal) || colorConverter.rgba.toString(rgbVal)
+      || colorConverter.hsl.toString(hslVal) || colorConverter.hex.toString(hexVal);
+
+  functionScript.validElt(colorElt);
+  $('.function-color').css('background-color', color);
+  functionScript.onFunctionUpdate(event);
+}
+
+functionScript.percentChange = function (percentVal) {
+  var val = colorElt.val() || rgbElt.val();
+  var color = colorConverter.rgb.convertFromString(val) || colorConverter.rgba.fromString(val);
   if (!color) {
     return;
   } else if (color.length == 3) {
@@ -63,20 +78,22 @@ var percentChange = function (percentVal) {
       resColor = colorFunctions.spin(color, percentVal)
       break;
   }
-  if(resColor) {
+  if (resColor) {
     var colorString = colorConverter.rgba.toString(resColor);
     resElt.val(colorString);
-    fBackgroundChange(colorString);
+    $('.function').css('background-color', colorString);
   }
 }
 
-var onFunctionUpdate = function (event){
+functionScript.onFunctionUpdate = function (event) {
   var percentVal = percentElt.val();
-  if(percentVal && percentVal.length > 0) {
-    percentChange(percentElt.val());
+  if (percentVal && percentVal.length > 0) {
+    functionScript.percentChange(percentElt.val());
   }
 }
 
-percentElt.on('change keyup click', onFunctionUpdate).ready(onFunctionUpdate);
+percentElt.on('change keyup click', functionScript.onFunctionUpdate).ready(functionScript.onFunctionUpdate);
 
-selectElt.on('change keyup click', onFunctionUpdate);
+selectElt.on('change keyup click', functionScript.onFunctionUpdate);
+
+colorElt.on('change keyup click', functionScript.onColorChange).ready(functionScript.onColorChange);

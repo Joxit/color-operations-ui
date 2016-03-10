@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <LINK href="style.css" rel="stylesheet" type="text/css">
+    <LINK href="node_modules/material-design-lite/dist/material.min.css" rel="stylesheet" type="text/css">
     <title>Color Operations</title>
 </head>
 <body>
-<div class="wrap">
-<div class="conversion">
+<div class="wrap flex">
+<div class="half-width border-right conversion">
   <input type="text" placeholder="hex" id="hex">
   <input type="text" placeholder="rgb" id="rgb">
   <input type="text" placeholder="hsl" id="hsl">
 </div>
-<div class="function">
+<div class="half-width border-left function">
   <input type="text" placeholder="percent" id="percent">
   <select name="function_selected" id="function_selected">
     <option value="saturate">saturate</option>
@@ -27,8 +28,9 @@
 </div>
 </div>
 <script src="node_modules/color-ops/index.js"></script>
+<script src="node_modules/material-design-lite/dist/material.min.js"></script>
 <script src="color-converter.js"></script>
- <script src="jquery-2.1.4.min.js"></script>
+<script src="jquery-2.1.4.min.js"></script>
 <script src="conversion-script.js"></script>
 <script src="function-script.js"></script>
 </body>

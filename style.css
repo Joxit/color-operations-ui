@@ -11,19 +11,29 @@ body {
   width: 100%;
   height: 100%;
   margin: auto;
+}
+
+.flex {
   display: flex;
 }
 
-.conversion, .function {
-  width: 50%;
+.full-width {
+  width: 100%;
   height: 100%;
+  overflow-y: auto;
 }
 
-.conversion {
+.half-width {
+  width: 50%;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.border-right {
   border-right: 1px solid rgba(200,200,200,1);
 }
 
-.function {
+.border-left {
   border-left: 1px solid rgba(200,200,200,1);
 }
 
