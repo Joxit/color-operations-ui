@@ -19,6 +19,10 @@ var percentElt = $('#percent');
 var selectElt = $('#function_selected');
 var resElt = $('#fonction_res');
 var colorElt = $('#color');
+var percentMixElt = $('#percent-mix');
+var colorMix1Elt = $('#color-mix1');
+var colorMix2Elt = $('#color-mix2');
+var resMixElt = $('#mix_res');
 
 functionScript.validElt = function (elt) {
   elt.removeClass('error').addClass('valid');
@@ -92,8 +96,68 @@ functionScript.onFunctionUpdate = function (event) {
   }
 }
 
+functionScript.onColorMixChange = function (elt, classUpdate, callback) {
+  return function (event) {
+    var rgbVal = colorConverter.rgb.fromString(elt.val()) || colorConverter.rgba.fromString(elt.val());
+    var hslVal = colorConverter.hsl.fromString(elt.val());
+    var hexVal = colorConverter.hex.fromString(elt.val());
+
+    if (!rgbVal && !hslVal && !hexVal) {
+      functionScript.errorElt(elt);
+      return;
+    }
+
+    var color = colorConverter.rgb.toString(rgbVal) || colorConverter.rgba.toString(rgbVal)
+        || colorConverter.hsl.toString(hslVal) || colorConverter.hex.toString(hexVal);
+
+    functionScript.validElt(elt);
+    $(classUpdate).css('background-color', color);
+    callback(event);
+  }
+}
+
+functionScript.onMixFunctionUpdate = function (event) {
+  var percentVal = percentMixElt.val();
+  if (percentVal && percentVal.length > 0) {
+    functionScript.percentChange(percentVal);
+  }
+
+  var val1 = colorMix1Elt.val();
+  var val2 = colorMix2Elt.val();
+  var color1 = colorConverter.rgb.convertFromString(val1) || colorConverter.rgba.fromString(val1);
+  var color2 = colorConverter.rgb.convertFromString(val2) || colorConverter.rgba.fromString(val2);
+
+  if (!color1 || !color2) {
+    return;
+  }
+  if (color1.length == 3) {
+    color1.push(1.0);
+  }
+  if (color2.length == 3) {
+    color2.push(1.0);
+  }
+
+  var resColor = colorFunctions.mix(color1, color2, percentVal)
+  if (resColor) {
+    var colorString = colorConverter.rgba.toString(resColor);
+    resMixElt.val(colorString);
+    $('.function-mix').css('background-color', colorString);
+  }
+
+}
+
 percentElt.on('change keyup click', functionScript.onFunctionUpdate).ready(functionScript.onFunctionUpdate);
 
 selectElt.on('change keyup click', functionScript.onFunctionUpdate);
 
 colorElt.on('change keyup click', functionScript.onColorChange).ready(functionScript.onColorChange);
+
+colorMix1Elt.on('change keyup click',
+    functionScript.onColorMixChange(colorMix1Elt, '.mix1-color', functionScript.onMixFunctionUpdate)).ready(
+    functionScript.onColorMixChange(colorMix1Elt, '.mix1-color', functionScript.onMixFunctionUpdate));
+
+colorMix2Elt.on('change keyup click',
+    functionScript.onColorMixChange(colorMix2Elt, '.mix2-color', functionScript.onMixFunctionUpdate)).ready(
+    functionScript.onColorMixChange(colorMix2Elt, '.mix2-color', functionScript.onMixFunctionUpdate));
+
+percentMixElt.on('change keyup click', functionScript.onMixFunctionUpdate).ready(functionScript.onMixFunctionUpdate);

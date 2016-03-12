@@ -81,4 +81,3 @@ hexElt.on('change keyup click', onHexChange).ready(onHexChange);
 rgbElt.on('change keyup click', onRgbChange).ready(onRgbChange);
 
 hslElt.on('change keyup click', onHslChange).ready(onHslChange);
-
