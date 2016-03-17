@@ -21,14 +21,14 @@
    </div>
   </header>
   <main class="mdl-layout__content">
-  <section class="mdl-layout__tab-panel is-active " id="fixed-tab-1">
+  <section class="mdl-layout__tab-panel mdl-layout is-active " id="fixed-tab-1">
    <div class="wrap conversion full-width">
     <input type="text" placeholder="hex" id="hex"> <input type="text" placeholder="rgb" id="rgb"> <input
      type="text" placeholder="hsl" id="hsl">
    </div>
   </section>
-  <section class="mdl-layout__tab-panel full-width" id="fixed-tab-2">
-   <div class="mdl-grid mdl-grid--no-spacing">
+  <section class="mdl-layout__tab-panel mdl-layout" id="fixed-tab-2">
+   <div class="mdl-grid mdl-grid--no-spacing mdl-layout">
     <div class="mdl-cell mdl-cell--6-col border-right function-color">
      <input type="text" placeholder="color" id="color">
     </div>
@@ -46,8 +46,8 @@
     </div>
    </div>
   </section>
-  <section class="mdl-layout__tab-panel" id="fixed-tab-3">
-   <div class="mdl-grid mdl-grid--no-spacing">
+  <section class="mdl-layout__tab-panel mdl-layout" id="fixed-tab-3">
+   <div class="mdl-grid mdl-grid--no-spacing mdl-layout">
     <div class="mdl-cell mdl-cell--6-col border-right">
      <div class="border-bottom half-height mix1-color">
       <input type="text" placeholder="color 1" id="color-mix1">
@@ -60,8 +60,7 @@
      <input type="text" placeholder="percent" id="percent-mix"> <select name="mix-function_selected"
       id="mix-function_selected">
       <option value="mix">mix</option>
-     </select> <input type="text"
-      placeholder="fonction mix result" id="mix_res" disabled>
+     </select> <input type="text" placeholder="fonction mix result" id="mix_res" disabled>
     </div>
    </div>
   </section>
