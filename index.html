@@ -9,13 +9,13 @@
 <body>
 <div class="wrap flex">
 <div class="half-width border-right conversion">
-  <input type="text" placeholder="hex" id="hex">
-  <input type="text" placeholder="rgb" id="rgb">
-  <input type="text" placeholder="hsl" id="hsl">
+  <input class="entry" type="text" placeholder="hex" id="hex">
+  <input class="entry" type="text" placeholder="rgb" id="rgb">
+  <input class="entry" type="text" placeholder="hsl" id="hsl">
 </div>
 <div class="half-width border-left function">
-  <input type="text" placeholder="percent" id="percent">
-  <select name="function_selected" id="function_selected">
+  <input class="entry" type="text" placeholder="percent" id="percent">
+  <select class="entry" name="function_selected" id="function_selected">
     <option value="saturate">saturate</option>
     <option value="desaturate">desaturate</option>
     <option value="lighten">lighten</option>
@@ -24,7 +24,7 @@
     <option value="fadeout">fadeout</option>
     <option value="spin">spin</option>
   </select>
-  <input type="text" placeholder="fonction result" id="fonction_res" disabled>
+  <input class="entry" type="text" placeholder="fonction result" id="fonction_res" disabled>
 </div>
 </div>
 <script src="node_modules/color-ops/index.js"></script>

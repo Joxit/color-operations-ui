@@ -23,11 +23,19 @@ var cBackgroundChange = function (color) {
 }
 
 var validElt = function (elt) {
-  elt.removeClass('error').addClass('valid');
+  if (!elt.hasClass('mdl-textfield__input')) {
+    elt.removeClass('error').addClass('valid');
+  } else if(!elt.parent().hasClass('is-valid')) {
+    elt.parent().removeClass('is-invalid').addClass('is-valid');
+  }
 }
 
 var errorElt = function (elt) {
-  elt.removeClass('valid').addClass('error');
+  if (!elt.hasClass('mdl-textfield__input')) {
+    elt.removeClass('valid').addClass('error');
+  } else if(!elt.parent().hasClass('is-invalid')) {
+    elt.parent().removeClass('is-valid').addClass('is-invalid');
+  }
 }
 
 var onHexChange = function (event) {
