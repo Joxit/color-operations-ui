@@ -41,11 +41,19 @@
   <section class="mdl-layout__tab-panel mdl-layout" id="fixed-tab-2">
    <div class="mdl-grid mdl-grid--no-spacing mdl-layout">
     <div class="mdl-cell mdl-cell--6-col border-right function-color">
-     <input type="text" placeholder="color" id="color">
+     <div class="mdl-textfield mdl-js-textfield centered">
+      <input class="mdl-textfield__input" type="text" id="color"> <label class="mdl-textfield__label"
+       for="color">Function color</label>
+     </div>
     </div>
     <div class="mdl-cell mdl-cell--6-col border-left function">
-     <input type="text" placeholder="percent" id="percent"> <select name="function_selected"
-      id="function_selected">
+     <div class="mdl-textfield mdl-js-textfield centered">
+      <input class="mdl-textfield__input" type="text" id="percent"> <label class="mdl-textfield__label"
+       for="percent">Function percent</label>
+     </div>
+     <br />
+     <div class="mdl-textfield mdl-js-textfield centered mdl-textselect">
+     <select class="mdl-textfield__input mdl-textfield__select" name="function_selected" id="function_selected">
       <option value="saturate">saturate</option>
       <option value="desaturate">desaturate</option>
       <option value="lighten">lighten</option>
@@ -53,7 +61,12 @@
       <option value="fadein">fadein</option>
       <option value="fadeout">fadeout</option>
       <option value="spin">spin</option>
-     </select> <input type="text" placeholder="fonction result" id="fonction_res" disabled>
+     </select> 
+     </div><br/>
+     <div class="mdl-textfield mdl-js-textfield centered">
+      <input class="mdl-textfield__input" type="text" id="fonction_res" readonly> <label class="mdl-textfield__label"
+       for="fonction_res">Function result</label>
+     </div>
     </div>
    </div>
   </section>
