@@ -53,19 +53,20 @@
      </div>
      <br />
      <div class="mdl-textfield mdl-js-textfield centered mdl-textselect">
-     <select class="mdl-textfield__input mdl-textfield__select" name="function_selected" id="function_selected">
-      <option value="saturate">saturate</option>
-      <option value="desaturate">desaturate</option>
-      <option value="lighten">lighten</option>
-      <option value="darken">darken</option>
-      <option value="fadein">fadein</option>
-      <option value="fadeout">fadeout</option>
-      <option value="spin">spin</option>
-     </select> 
-     </div><br/>
+      <select class="mdl-textfield__input mdl-textfield__select" name="function_selected" id="function_selected">
+       <option value="saturate">saturate</option>
+       <option value="desaturate">desaturate</option>
+       <option value="lighten">lighten</option>
+       <option value="darken">darken</option>
+       <option value="fadein">fadein</option>
+       <option value="fadeout">fadeout</option>
+       <option value="spin">spin</option>
+      </select>
+     </div>
+     <br />
      <div class="mdl-textfield mdl-js-textfield centered">
-      <input class="mdl-textfield__input" type="text" id="fonction_res" readonly> <label class="mdl-textfield__label"
-       for="fonction_res">Function result</label>
+      <input class="mdl-textfield__input" type="text" id="fonction_res" readonly> <label
+       class="mdl-textfield__label" for="fonction_res">Function result</label>
      </div>
     </div>
    </div>
@@ -74,17 +75,34 @@
    <div class="mdl-grid mdl-grid--no-spacing mdl-layout">
     <div class="mdl-cell mdl-cell--6-col border-right">
      <div class="border-bottom half-height mix1-color">
-      <input type="text" placeholder="color 1" id="color-mix1">
+      <div class="mdl-textfield mdl-js-textfield centered">
+       <input class="mdl-textfield__input" type="text" id="color-mix1"> <label class="mdl-textfield__label"
+        for="color-mix1">First color</label>
+      </div>
      </div>
      <div class="border-top half-height mix2-color">
-      <input type="text" placeholder="color 2" id="color-mix2">
+      <div class="mdl-textfield mdl-js-textfield centered">
+       <input class="mdl-textfield__input" type="text" id="color-mix2"> <label class="mdl-textfield__label"
+        for="color-mix2">Second color</label>
+      </div>
      </div>
     </div>
     <div class="mdl-cell mdl-cell--6-col border-left function-mix">
-     <input type="text" placeholder="percent" id="percent-mix"> <select name="mix-function_selected"
-      id="mix-function_selected">
-      <option value="mix">mix</option>
-     </select> <input type="text" placeholder="fonction mix result" id="mix_res" disabled>
+     <div class="mdl-textfield mdl-js-textfield centered">
+      <input class="mdl-textfield__input" type="text" id="percent-mix"> <label class="mdl-textfield__label"
+       for="percent-mix">Percent</label>
+     </div>
+     <br />
+     <div class="mdl-textfield mdl-js-textfield centered mdl-textselect">
+      <select class="mdl-textfield__input mdl-textfield__select" name="function_selected" id="mix-function_selected">
+       <option value="mix">mix</option>
+      </select>
+     </div>
+     <br />
+     <div class="mdl-textfield mdl-js-textfield centered">
+      <input class="mdl-textfield__input" type="text" id="mix_res" readonly> <label class="mdl-textfield__label"
+       for="mix_res">Function mix result</label>
+     </div>
     </div>
    </div>
   </section>
