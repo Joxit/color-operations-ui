@@ -24,6 +24,18 @@ var colorMix1Elt = $('#color-mix1');
 var colorMix2Elt = $('#color-mix2');
 var resMixElt = $('#mix_res');
 
+functionScript.eltVal = function (elt, val) {
+  if (elt.hasClass('mdl-textfield__input')) {
+    var isDirty = elt.parent().hasClass('is-dirty');
+    if(val.length == 0 && isDirty) {
+      elt.parent().removeClass('is-dirty');
+    } else if (val.length != 0 && !isDirty) {
+      elt.parent().addClass('is-dirty');
+    }
+  }
+  elt.val(val);
+}
+
 functionScript.validElt = function (elt) {
   if (!elt.hasClass('mdl-textfield__input')) {
     elt.removeClass('error').addClass('valid');
@@ -92,7 +104,7 @@ functionScript.percentChange = function (percentVal) {
   }
   if (resColor) {
     var colorString = colorConverter.rgba.toString(resColor);
-    resElt.val(colorString);
+    functionScript.eltVal(resElt, colorString);
     $('.function').css('background-color', colorString);
   }
 }
@@ -148,7 +160,7 @@ functionScript.onMixFunctionUpdate = function (event) {
   var resColor = colorFunctions.mix(color1, color2, percentVal)
   if (resColor) {
     var colorString = colorConverter.rgba.toString(resColor);
-    resMixElt.val(colorString);
+    functionScript.eltVal(resMixElt, colorString);
     $('.function-mix').css('background-color', colorString);
   }
 

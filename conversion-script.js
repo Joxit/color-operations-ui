@@ -18,6 +18,18 @@ var hexElt = $('#hex');
 var rgbElt = $('#rgb');
 var hslElt = $('#hsl');
 
+eltChangeVal = function (elt, val) {
+  if (elt.hasClass('mdl-textfield__input')) {
+    var isDirty = elt.parent().hasClass('is-dirty');
+    if(val.length == 0 && isDirty) {
+      elt.parent().removeClass('is-dirty');
+    } else if (val.length != 0 && !isDirty) {
+      elt.parent().addClass('is-dirty');
+    }
+  }
+  elt.val(val);
+}
+
 var cBackgroundChange = function (color) {
   $('.conversion').css('background-color', color);
 }
@@ -46,8 +58,8 @@ var onHexChange = function (event) {
   }
 
   validElt(hexElt);
-  rgbElt.val(colorConverter.rgb.toString(colorConverter.hex.rgb(hexVal)));
-  hslElt.val(colorConverter.hsl.toString(colorConverter.hex.hsl(hexVal)));
+  eltChangeVal(rgbElt, colorConverter.rgb.toString(colorConverter.hex.rgb(hexVal)));
+  eltChangeVal(hslElt, colorConverter.hsl.toString(colorConverter.hex.hsl(hexVal)));
   cBackgroundChange(colorConverter.hex.toString(hexVal));
   functionScript.onFunctionUpdate(event);
 }
@@ -60,8 +72,8 @@ var onRgbChange = function (event) {
   }
 
   validElt(rgbElt);
-  hexElt.val(colorConverter.hex.toString(colorConverter.rgb.hex(rgbVal)));
-  hslElt.val(colorConverter.hsl.toString(colorConverter.rgb.hsl(rgbVal)));
+  eltChangeVal(hexElt, colorConverter.hex.toString(colorConverter.rgb.hex(rgbVal)));
+  eltChangeVal(hslElt, colorConverter.hsl.toString(colorConverter.rgb.hsl(rgbVal)));
   if (rgbVal.length == 4) {
     cBackgroundChange(colorConverter.rgba.toString(rgbVal));
   } else {
@@ -78,8 +90,8 @@ var onHslChange = function (event) {
   }
 
   validElt(hslElt);
-  hexElt.val(colorConverter.hex.toString(colorConverter.hsl.hex(hslVal)));
-  rgbElt.val(colorConverter.rgb.toString(colorConverter.hsl.rgb(hslVal)));
+  eltChangeVal(hexElt, colorConverter.hex.toString(colorConverter.hsl.hex(hslVal)));
+  eltChangeVal(rgbElt, colorConverter.rgb.toString(colorConverter.hsl.rgb(hslVal)));
   cBackgroundChange(colorConverter.hsl.toString(hslVal));
   functionScript.onFunctionUpdate(event);
 }
