@@ -138,8 +138,8 @@ functionScript.onColorMixChange = function (elt, classUpdate, callback) {
 
 functionScript.onMixFunctionUpdate = function (event) {
   var percentVal = percentMixElt.val();
-  if (percentVal && percentVal.length > 0) {
-    functionScript.percentChange(percentVal);
+  if (!percentVal || percentVal.length == 0) {
+    return;
   }
 
   var val1 = colorMix1Elt.val();

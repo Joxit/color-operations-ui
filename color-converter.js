@@ -133,7 +133,7 @@ var rgba = {
     rgba = rgba.replace(/ /g, "");
     if ((match = rgba.match(/^rgba\(([0-9]+),([0-9]+),([0-9]+),([0-9.]+)\)$/i)) != null
         || (match = rgba.match(/^\[?([0-9]+),([0-9]+),([0-9]+),([0-9.]+)\]?$/)) != null) {
-      return [ match[1], match[2], match[3], match[4] ];
+      return [ parseInt(match[1]), parseInt(match[2]), parseInt(match[3]), parseInt(match[4]) ];
     }
   },
   toString: function (rgb) {
