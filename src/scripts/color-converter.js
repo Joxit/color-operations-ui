@@ -47,6 +47,9 @@ var hex = {
       return hex.replace(/^(0x)?/i, '#');
     }
     console.log('Undefined hex');
+  },
+  isValid: function (hex) {
+    return this.fromString(hex) != undefined; 
   }
 };
 var rgb = {
@@ -115,6 +118,9 @@ var rgb = {
   convertFromString: function (color) {
     return colorConverter.hex.rgb(colorConverter.hex.fromString(color))
         || colorConverter.hsl.rgb(colorConverter.hsl.fromString(color)) || colorConverter.rgb.fromString(color);
+  },
+  isValid: function (hex) {
+    return this.fromString(hex) != undefined; 
   }
 };
 var rgba = {
@@ -141,6 +147,9 @@ var rgba = {
       return 'rgba(' + Math.round(rgb[0]) + ',' + Math.round(rgb[1]) + ',' + Math.round(rgb[2]) + ',' + rgb[3] + ')';
     }
     console.log('Undefined rgba');
+  },
+  isValid: function (hex) {
+    return this.fromString(hex) != undefined; 
   }
 };
 var hsl = {
@@ -199,8 +208,10 @@ var hsl = {
           + '%)';
     }
     console.log('Undefined hsl');
+  },
+  isValid: function (hex) {
+    return this.fromString(hex) != undefined; 
   }
-
 };
 var colorConverter = {
   hex: hex,
@@ -209,4 +220,6 @@ var colorConverter = {
   hsl: hsl
 };
 
-module.exports = colorConverter;
+if (typeof module !== 'undefined') {
+  module.exports = colorConverter;
+}
