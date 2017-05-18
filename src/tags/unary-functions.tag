@@ -15,23 +15,72 @@
  along with this program.  If not, see <http://www.gnu.org/licenses/>.
  -->
 <unary-functions hide="{hide}">
-  <material-card>
-    <material-input ref="color" placeholder="Function color" valid=""></material-input>
+  <material-card ref="color-card">
+    <material-input ref="color" placeholder="Function color" valid="{colorConverter.rgb.isValid}"></material-input>
   </material-card>
-  <material-card>
-    <material-input ref="percent" placeholder="Function percent" valid=""></material-input>
-    <select>
+  <material-card ref="function-card">
+    <material-input ref="percent" placeholder="Function percent" valid="/^[0-9]+(\.[0-9]+)?%?$|^$/"></material-input>
+    <select ref="function">
       <option value="saturate">saturate</option>
       <option value="desaturate">desaturate</option>
       <option value="lighten">lighten</option>
       <option value="darken">darken</option>
-      <option value="fadein">fadein</option>
+      <option value="fade">fadein</option>
       <option value="fadeout">fadeout</option>
       <option value="spin">spin</option>
     </select>
-    <material-input ref="result" placeholder="Function result" valid=""></material-input>
+    <material-input ref="result" placeholder="Function result" valid="" disabled="true"></material-input>
   </material-card>
   <script>
-    this.on('mount', function () {});
+    [
+      {
+        f: 'desaturate',
+        n: 'saturate'
+      }, {
+        f: 'darken',
+        n: 'lighten'
+      }, {
+        f: 'fadeout',
+        n: 'fade'
+      }
+    ].forEach(function (e) {
+      colorFunctions[e.f] = function (c, p) {
+        return colorFunctions[e.n](c, -p);
+      }
+    });
+    this.on('mount', function () {
+      var self = this;
+      var colorCard = this.refs['color-card'];
+      var functionCard = this.refs['function-card'];
+      colorCard.refs['color'].validate = function (value) {
+        if (!value || value.length == 0) {
+          return true;
+        }
+        this.typeValue = colorConverter.getStringTypeAndValue(value);
+        return this.typeValue !== undefined;
+      };
+      colorCard.refs['color'].on('valueChanged', self.onColorChange(colorCard, functionCard));
+      functionCard.refs['function'].onchange = functionCard.refs['function'].onclick = functionCard.refs['function'].onkeyup = self.onColorChange(colorCard, functionCard);
+      functionCard.refs['percent'].on('valueChanged', self.onColorChange(colorCard, functionCard));
+    });
+    this.onColorChange = function (colorCard, functionCard) {
+      return function (value) {
+        if ((!this.error && value && value.length > 0) || value instanceof Event) {
+          var percent = functionCard.refs['percent'].value;
+          var typeValue = colorCard.refs['color'].typeValue;
+          if (this.name === 'color') {
+            colorCard.root.style.backgroundColor = colorConverter[typeValue.type].toString(typeValue.value);
+          }
+          if (typeValue && !functionCard.refs['percent'].error && percent.length > 0) {
+            var color = typeValue.value;
+            if (typeValue.type !== 'rgba') {
+              color = colorConverter[typeValue.type].rgba(typeValue.value);
+            }
+            functionCard.refs['result'].value = functionCard.root.style.backgroundColor = colorConverter.rgba.toString(colorFunctions[functionCard.refs['function'].value](color, parseFloat(percent)));
+            functionCard.refs['result'].update();
+          }
+        }
+      }
+    }
   </script>
 </unary-functions>

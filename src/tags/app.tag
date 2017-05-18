@@ -16,31 +16,41 @@
  -->
 <app>
   <header>
-  <material-navbar>
-    <div class="title">Color operation ui</div>
-  </material-navbar>
-  
-  <material-tabs useLine="true" tabs="{this.tabs}" tabchanged={this.tabChanged}></material-tabs>
-</header>
+    <material-navbar>
+      <div class="title">Color operation ui</div>
+    </material-navbar>
+    <material-tabs useLine="true" tabs="{this.tabs}" tabchanged={this.tabChanged}></material-tabs>
+  </header>
   <main>
-  <converter></converter>
-  <unary-functions></unary-functions>
-  <binary-functions></binary-functions>
-</main>
+    <converter></converter>
+    <unary-functions></unary-functions>
+    <binary-functions></binary-functions>
+  </main>
   <script>
-  var self = this;
-  this.tabs = [{title:'Converter', tag:'converter'},{title:'Unary Functions', tag:'unary-functions'},{title:'Binary Functions', tag: 'binary-functions'}];
-  this.tabChanged = function(tab) {
-    self.tabs.forEach(function(e) {
-      if (tab.tag === e.tag) {
-        self.tags[e.tag].update({hide: false});
-      } else {
-        self.tags[e.tag].update({hide: true});
+    var self = this;
+    this.tabs = [
+      {
+        title: 'Converter',
+        tag: 'converter'
+      }, {
+        title: 'Unary Functions',
+        tag: 'unary-functions'
+      }, {
+        title: 'Binary Functions',
+        tag: 'binary-functions'
       }
+    ];
+    this.tabChanged = function (tab) {
+      self.tabs.forEach(function (e) {
+        if (tab.tag === e.tag) {
+          self.tags[e.tag].update({hide: false});
+        } else {
+          self.tags[e.tag].update({hide: true});
+        }
+      });
+    };
+    this.on('mount', function () {
+      this.tabChanged({tag: 'unary-functions'})
     });
-  };
-  this.on('mount', function() {
-    this.tabChanged({tag: 'unary-functions'})
-  });
   </script>
 </app>
