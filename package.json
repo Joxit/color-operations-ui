@@ -9,8 +9,6 @@
   "description": "A web UI for color operations",
   "devDependencies": {
     "color-ops": "mapbox/color-ops",
-    "jquery": "jquery/jquery",
-    "material-design-lite": "^1.1.2",
     "riot": "^3.0.0",
     "riot-mui": "^0.1.0",
     "webpack": "^2.0.0"
