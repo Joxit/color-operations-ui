@@ -50,7 +50,7 @@
       });
     };
     this.on('mount', function () {
-      this.tabChanged({tag: 'unary-functions'})
+      this.tabChanged({tag: 'converter'})
     });
   </script>
 </app>
