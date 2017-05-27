@@ -47,6 +47,9 @@ var hex = {
       return hex.replace(/^(0x)?/i, '#');
     }
     console.log('Undefined hex');
+  },
+  isValid: function (hex) {
+    return this.fromString(hex) != undefined; 
   }
 };
 var rgb = {
@@ -59,6 +62,9 @@ var rgb = {
     var g = Number(rgbColor[1]).toString(16);
     var b = Number(rgbColor[2]).toString(16);
     return (r.length === 1 ? "0" : "") + r + (g.length === 1 ? "0" : "") + g + (b.length === 1 ? "0" : "") + b;
+  },
+  rgba: function(rgb) {
+    return [rgb[0], rgb[1], rgb[2], 1]
   },
   hsl: function (rgb) {
     if (!rgb || !Array.isArray(rgb) || rgb.length != 3) {
@@ -115,6 +121,9 @@ var rgb = {
   convertFromString: function (color) {
     return colorConverter.hex.rgb(colorConverter.hex.fromString(color))
         || colorConverter.hsl.rgb(colorConverter.hsl.fromString(color)) || colorConverter.rgb.fromString(color);
+  },
+  isValid: function (hex) {
+    return this.fromString(hex) != undefined; 
   }
 };
 var rgba = {
@@ -141,6 +150,9 @@ var rgba = {
       return 'rgba(' + Math.round(rgb[0]) + ',' + Math.round(rgb[1]) + ',' + Math.round(rgb[2]) + ',' + rgb[3] + ')';
     }
     console.log('Undefined rgba');
+  },
+  isValid: function (hex) {
+    return this.fromString(hex) != undefined; 
   }
 };
 var hsl = {
@@ -178,6 +190,10 @@ var hsl = {
       return [ Math.round(rgb[0] * 255), Math.round(rgb[1] * 255), Math.round(rgb[2] * 255) ];
     }
   },
+  rgba: function(hsl) {
+    var rgba = this.rgba(hsl);
+    return [rgba[0], rgba[1], rgba[2], 1];
+  },
   fromString: function (hsl) {
     if (!hsl) {
       console.log('Undefined hsl');
@@ -199,14 +215,36 @@ var hsl = {
           + '%)';
     }
     console.log('Undefined hsl');
+  },
+  isValid: function (hex) {
+    return this.fromString(hex) != undefined; 
   }
-
 };
 var colorConverter = {
   hex: hex,
   rgb: rgb,
   rgba: rgba,
-  hsl: hsl
+  hsl: hsl,
+  isValid: function (value) {
+    return colorConverter.hex.isValid(value) || colorConverter.rgb.isValid(value) || colorConverter.rgba.isValid(value) || colorConverter.hsl.isValid(value);
+  },
+  getStringTypeAndValue: function(value){
+    var hex = colorConverter.hex.fromString(value);
+    var rgb = colorConverter.rgb.fromString(value);
+    var rgba = colorConverter.rgba.fromString(value);
+    var hsl = colorConverter.hsl.fromString(value);
+    if (hex) {
+      return { value: hex, type: 'hex'};
+    } else if (rgb) {
+      return { value: rgb, type: 'rgb' };
+    } else if (rgba) {
+      return { value: rgba, type: 'rgba' };
+    } else if (hsl) {
+      return { value: hsl, type: 'hsl' };
+    }
+  }
 };
 
-module.exports = colorConverter;
+if (typeof module !== 'undefined') {
+  module.exports = colorConverter;
+}
