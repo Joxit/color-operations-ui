@@ -24,16 +24,20 @@
 </head>
 <body>
 <app></app>
-<script src="../node_modules/color-ops/index.js"></script>
+<!-- build:js scripts/vendor.js -->
 <script src="../node_modules/riot/riot+compiler.js"></script>
 <script src="../node_modules/riot-mui/build/js/riot-mui.js"></script>
+<script src="../node_modules/color-ops/index.js"></script>
+<!-- endbuild -->
+<!-- build:js scripts/tags.js -->
 <script src="tags/app.tag" type="riot/tag"></script>
 <script src="tags/converter.tag" type="riot/tag"></script>
 <script src="tags/unary-functions.tag" type="riot/tag"></script>
 <script src="tags/binary-functions.tag" type="riot/tag"></script>
+<!-- endbuild -->
+<!-- build:js scripts/script.js -->
 <script src="scripts/script.js"></script>
 <script src="scripts/color-converter.js"></script>
-<!-- <script src="scripts/conversion-script.js"></script> -->
-<!-- <script src="scripts/function-script.js"></script> -->
+<!-- endbuild -->
 </body>
 </html>
