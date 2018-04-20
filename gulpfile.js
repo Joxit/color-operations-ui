@@ -13,7 +13,6 @@ var riot = require('gulp-riot');
 var minifier = require('gulp-uglify/minifier');
 var uglify = require('uglify-js-harmony');
 var useref = require('gulp-useref');
-var defineModule = require('gulp-define-module');
 
 
 gulp.task('html', ['clean'], function() {

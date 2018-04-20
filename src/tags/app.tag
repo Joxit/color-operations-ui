@@ -17,7 +17,7 @@
 <app>
   <header>
     <material-navbar>
-      <div class="title">Color operation ui</div>
+      <div class="title">Color Operations UI</div>
     </material-navbar>
     <material-tabs useLine="true" tabs="{this.tabs}" tabchanged={this.tabChanged}></material-tabs>
   </header>
@@ -26,6 +26,19 @@
     <unary-functions></unary-functions>
     <binary-functions></binary-functions>
   </main>
+  <footer>
+    <material-footer>
+      <a class="material-footer-logo" href="https://joxit.github.io/color-operations-ui/">Color Operations UI</a>
+      <ul class="material-footer-link-list">
+        <li>
+          <a href="https://github.com/Joxit/color-operations-ui">Contribute on GitHub</a>
+        </li>
+        <li>
+          <a href="https://github.com/Joxit/color-operations-ui/blob/master/LICENSE">Privacy &amp; Terms</a>
+        </li>
+      </ul>
+    </material-footer>
+  </footer>
   <script>
     var self = this;
     this.tabs = [

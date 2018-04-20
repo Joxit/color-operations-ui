@@ -77,3 +77,9 @@ select {
   font-size: 24px;
   line-height: 70px;
 }
+
+footer {
+  width: 100%;
+  position: fixed;
+  bottom: 0;
+}
