@@ -1,0 +1,7 @@
+_config.yml
+demo
+node_modules
+*.lock
+npm-*
+.project
+yarn*

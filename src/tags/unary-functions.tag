@@ -16,7 +16,7 @@
  -->
 <unary-functions hide="{hide}">
   <material-card ref="color-card">
-    <material-input ref="color" placeholder="Function color" valid="{colorConverter.rgb.isValid}"></material-input>
+    <material-input ref="color" placeholder="Function color" valid="{colorConverter.isValid}"></material-input>
   </material-card>
   <material-card ref="function-card">
     <material-input ref="percent" placeholder="Function percent" valid="/^[0-9]+(\.[0-9]+)?%?$|^$/"></material-input>
@@ -76,6 +76,7 @@
             if (typeValue.type !== 'rgba') {
               color = colorConverter[typeValue.type].rgba(typeValue.value);
             }
+            console.log(functionCard.root.style.backgroundColor, colorFunctions[functionCard.refs['function'].value](color, parseFloat(percent)))
             functionCard.refs['result'].value = functionCard.root.style.backgroundColor = colorConverter.rgba.toString(colorFunctions[functionCard.refs['function'].value](color, parseFloat(percent)));
             functionCard.refs['result'].update();
           }
